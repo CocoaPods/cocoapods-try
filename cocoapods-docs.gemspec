@@ -6,11 +6,9 @@ require 'cocoapods_try.rb'
 Gem::Specification.new do |spec|
   spec.name          = "cocoapods-try"
   spec.version       = CocoapodsTry::VERSION
-  spec.authors       = ["Fabio Pelosin"]
-  spec.email         = ["fabiopelosin@gmail.com"]
-  spec.description   = %q{Try a Pod!}
-  spec.summary       = %q{Try a Pod!}
-  spec.homepage      = "https://github.com/irrationalfab/cocoapods-try"
+  spec.authors       = ["CocoaPods Dev Team"]
+  spec.summary       = %q{CocoaPods plugin which allows to quickly try the demo project of a Pod.}
+  spec.homepage      = "https://github.com/cocoapods/cocoapods-try"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

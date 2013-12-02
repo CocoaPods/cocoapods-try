@@ -1,12 +1,12 @@
 # Cocoapods::Try
 
-Try a Pod!
+CocoaPods plugin which allows to quickly try the demo project of a Pod.
 
 ## Installation
 
     $ git clone THIS_REPO_URL
     $ cd THIS_REPO
-    $ rake install cocoapods-try
+    $ rake install
 
 ## Usage
 
