@@ -18,9 +18,11 @@ module Pod
       end
 
       it "runs" do
+        Config.instance.skip_repo_update = false
         command = Pod::Command.parse(['try', 'ARAnalytics'])
         Installer::PodSourceInstaller.any_instance.expects(:install!)
-        command.stubs(:pick_demo_project).returns("/tmp/Proj.xcodeproj")
+        command.expects(:update_specs_repos)
+        command.expects(:pick_demo_project).returns("/tmp/Proj.xcodeproj")
         command.expects(:open_project).with('/tmp/Proj.xcodeproj')
         command.run
       end

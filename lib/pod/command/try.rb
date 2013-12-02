@@ -24,6 +24,7 @@ module Pod
 
       def run
         spec = spec_with_name(@name)
+        update_specs_repos
         UI.title "Trying #{spec.name}" do
           pod_dir = install_pod(spec, TRY_TMP_DIR)
           proj = pick_demo_project(pod_dir)
@@ -139,6 +140,16 @@ module Pod
 
       # Private Helpers
       #-----------------------------------------------------------------------#
+
+      # @return [void] Updates the specs repo unless disabled by the config.
+      #
+      def update_specs_repos
+        unless config.skip_repo_update?
+          UI.section 'Updating spec repositories' do
+            SourcesManager.update
+          end
+        end
+      end
 
       # Opens the project at the given path.
       #
