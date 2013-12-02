@@ -1,4 +1,5 @@
 # Cocoapods::Try
+[![Build Status](https://travis-ci.org/CocoaPods/cocoapods-try.png?branch=master)](https://travis-ci.org/CocoaPods/cocoapods-try)
 
 CocoaPods plugin which allows to quickly try the demo project of a Pod.
 
