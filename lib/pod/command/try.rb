@@ -98,9 +98,7 @@ module Pod
             "of the Pod: `#{dir}`"
         elsif glob_match.count == 1
           glob_match.first
-        elsif (selection = filter_array(glob_match, "demo")).count == 1
-          selection.first
-        elsif (selection = filter_array(glob_match, "example")).count == 1
+        elsif (selection = glob_match.grep(/demo|example/i)).count == 1
           selection.first
         else
           message = "Which project would you like to open"
@@ -161,21 +159,6 @@ module Pod
       def open_project(path)
         UI.puts "Opening '#{path}'"
         `open "#{path}"`
-      end
-
-      # Selects the entries in the given array which includes the given string
-      # (case insensitive check).
-      #
-      # @param  [Array] array
-      #         The array to filter.
-      #
-      # @param  [String] string
-      #         The string that should be used to filter the array.
-      #
-      # @return [Array] The selection.
-      #
-      def filter_array(array, string)
-        array.select { |p| p.downcase.include?(string.downcase) }
       end
 
       # Presents a choice among the elements of an array to the user.
