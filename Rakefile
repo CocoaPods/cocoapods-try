@@ -6,9 +6,9 @@ end
 
 task :bootstrap, :use_bundle_dir? do |t, args|
   if args[:use_bundle_dir?]
-    execute_command "bundle install --path ./travis_bundle_dir"
+    sh "bundle install --path ./travis_bundle_dir"
   else
-    execute_command "bundle install"
+    sh "bundle install"
   end
 end
 
