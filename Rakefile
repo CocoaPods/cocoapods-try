@@ -12,9 +12,11 @@ task :bootstrap, :use_bundle_dir? do |t, args|
   end
 end
 
-desc "Runs all the specs"
-task :specs do
-  sh "bundle exec bacon #{specs('**')}"
+namespace :spec do
+  desc "Runs all the specs"
+  task :ci do
+    sh "bundle exec bacon #{specs('**')}"
+  end
 end
 
-task :default => :specs
+task :default => "spec:ci"
