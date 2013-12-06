@@ -102,10 +102,11 @@ module Pod
           path.should == proj
         end
 
-        it "performs an installation and returns the path of the Podfile" do
+        it "performs an installation and returns the path of the workspace" do
           Pathname.any_instance.stubs(:exist?).returns(true)
           proj = "/tmp/Project.xcodeproj"
           @sut.expects(:perform_cocoapods_installation)
+          Podfile.stubs(:from_file).returns(stub(:workspace_path => "/tmp/Project.xcworkspace"))
           path = @sut.install_podfile(proj)
           path.should == "/tmp/Project.xcworkspace"
         end
