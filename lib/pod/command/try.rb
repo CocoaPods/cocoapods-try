@@ -123,11 +123,13 @@ module Pod
       def install_podfile(proj)
         return unless proj
         dirname = Pathname.new(proj).dirname
-        podfile = dirname + 'Podfile'
-        if podfile.exist?
+        podfile_path = dirname + 'Podfile'
+        if podfile_path.exist?
           Dir.chdir(dirname) do
             perform_cocoapods_installation
-            proj.chomp(File.extname(proj.to_s)) + '.xcworkspace'
+
+            podfile = Pod::Podfile.from_file(podfile_path)
+            File.expand_path(podfile.workspace_path)
           end
         else
           proj
