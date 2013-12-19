@@ -80,7 +80,9 @@ module Pod
         TRY_TMP_DIR + spec.name
       end
 
-      # Picks a project suitable for the demo purposes in the given directory.
+      # Picks a project or workspace suitable for the demo purposes in the
+      # given directory.
+      #
       # To decide the project simple heuristics are used according to the name,
       # if no project is found this method raises and `Informative` otherwise
       # if more than one project is found the choice is presented to the user.
@@ -91,15 +93,18 @@ module Pod
       # @return [String] The path of the project.
       #
       def pick_demo_project(dir)
-        glob_match = Dir.glob("#{dir}/**/*.xcodeproj")
+        glob_match = Dir.glob("#{dir}/**/*.xc{odeproj,workspace}")
         glob_match = glob_match.reject { |p| p.include?('Pods.xcodeproj') }
+
         if glob_match.count == 0
           raise Informative, "Unable to find any project in the source files" \
             "of the Pod: `#{dir}`"
         elsif glob_match.count == 1
           glob_match.first
-        elsif (selection = glob_match.grep(/demo|example/i)).count == 1
-          selection.first
+        elsif (workspaces = glob_match.grep(/(demo|example).*\.xcworkspace$/i)).count == 1
+          workspaces.first
+        elsif (projects = glob_match.grep(/demo|example/i)).count == 1
+          projects.first
         else
           message = "Which project would you like to open"
           selection_array = glob_match.map do |p|
