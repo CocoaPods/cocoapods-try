@@ -92,6 +92,12 @@ module Pod
           path = @sut.pick_demo_project(stub(:cleanpath=>''))
           path.should == "Lib_1.xcodeproj"
         end
+
+        it "should prefer demo or example workspaces" do
+          Dir.stubs(:glob).returns(['Project Demo.xcodeproj', 'Project Demo.xcworkspace'])
+          path = @sut.pick_demo_project(stub(:cleanpath => ''))
+          path.should == 'Project Demo.xcworkspace'
+        end
       end
 
       describe "#install_podfile" do
