@@ -94,7 +94,9 @@ module Pod
       #
       def pick_demo_project(dir)
         glob_match = Dir.glob("#{dir}/**/*.xc{odeproj,workspace}")
-        glob_match = glob_match.reject { |p| p.include?('Pods.xcodeproj') }
+        glob_match = glob_match.reject do |p|
+          p.include?('Pods.xcodeproj') || p.end_with?('.xcodeproj/project.xcworkspace')
+        end
 
         if glob_match.count == 0
           raise Informative, "Unable to find any project in the source files" \
