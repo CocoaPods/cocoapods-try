@@ -7,7 +7,7 @@ module Pod
       self.summary = "Try a Pod!"
 
       self.description = <<-DESC
-          Donwloads the Pod with the given NAME and opens its project.
+          Downloads the Pod with the given NAME and opens its project.
       DESC
 
       self.arguments = 'NAME'
