@@ -95,7 +95,9 @@ module Pod
       def pick_demo_project(dir)
         glob_match = Dir.glob("#{dir}/**/*.xc{odeproj,workspace}")
         glob_match = glob_match.reject do |p|
-          p.include?('Pods.xcodeproj') || p.end_with?('.xcodeproj/project.xcworkspace')
+          p.include?('Pods.xcodeproj') || \
+          p.end_with?('.xcodeproj/project.xcworkspace') || \
+          (p.end_with?('.xcodeproj') && glob_match.include?(p.chomp(File.extname(p.to_s)) + '.xcworkspace'))
         end
 
         if glob_match.count == 0
