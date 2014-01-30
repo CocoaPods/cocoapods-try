@@ -122,6 +122,14 @@ module Pod
           path = @sut.install_podfile(proj)
           path.should == "/tmp/Project.xcworkspace"
         end
+
+        it "returns the default workspace if one is not set" do
+          Pathname.any_instance.stubs(:exist?).returns(true)
+          proj = "/tmp/Project.xcodeproj"
+          Podfile.stubs(:from_file).returns(stub(:workspace_path => nil))
+          path = @sut.install_podfile(proj)
+          path.should == "/tmp/Project.xcworkspace"
+        end
       end
     end
 

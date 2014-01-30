@@ -136,7 +136,12 @@ module Pod
             perform_cocoapods_installation
 
             podfile = Pod::Podfile.from_file(podfile_path)
-            File.expand_path(podfile.workspace_path)
+
+            if podfile.workspace_path
+              File.expand_path(podfile.workspace_path)
+            else
+              proj.chomp(File.extname(proj.to_s)) + '.xcworkspace'
+            end
           end
         else
           proj
