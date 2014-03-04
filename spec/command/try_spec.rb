@@ -14,10 +14,10 @@ module Pod
         command = Pod::Command.parse(['try'])
         should.raise CLAide::Help do
           command.validate!
-        end.message.should.match /A Pod name is required/
+        end.message.should.match /A Pod name or URL is required/
       end
 
-      it "runs" do
+      it "runs if passed in an Pod name" do
         Config.instance.skip_repo_update = false
         command = Pod::Command.parse(['try', 'ARAnalytics'])
         Installer::PodSourceInstaller.any_instance.expects(:install!)
@@ -26,6 +26,17 @@ module Pod
         command.expects(:open_project).with('/tmp/Proj.xcodeproj')
         command.run
       end
+
+      it "runs if passed in a git repository URL" do
+        Config.instance.skip_repo_update = false
+        command = Pod::Command.parse(['try', 'https://github.com/orta/ARAnalytics.git'])
+        Installer::PodSourceInstaller.any_instance.expects(:install!)
+        command.expects(:update_specs_repos)
+        command.expects(:pick_demo_project).returns("/tmp/Proj.xcodeproj")
+        command.expects(:open_project).with('/tmp/Proj.xcodeproj')
+        command.run
+      end
+
     end
 
     #-------------------------------------------------------------------------#
@@ -39,6 +50,25 @@ module Pod
       it "returns the spec with the given name" do
         spec = @sut.spec_with_name('ARAnalytics')
         spec.name.should == "ARAnalytics"
+      end
+
+      describe "#spec_at_url" do
+
+        it "returns a spec for an https git repo" do
+          spec = @sut.spec_with_url('https://github.com/orta/ARAnalytics.git')
+          spec.name.should == "ARAnalytics"
+        end
+
+        it "returns a spec for a github url" do
+          spec = @sut.spec_with_url('https://github.com/orta/ARAnalytics')
+          spec.name.should == "ARAnalytics"
+        end
+
+        it "returns a spec for a git ssh url" do
+          spec = @sut.spec_with_url('git@github.com:orta/ARAnalytics.git')
+          spec.name.should == "ARAnalytics"
+        end
+
       end
 
       it "installs the pod" do

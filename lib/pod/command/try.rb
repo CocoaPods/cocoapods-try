@@ -19,11 +19,22 @@ module Pod
 
       def validate!
         super
-        help! "A Pod name is required." unless @name
+        help! "A Pod name or URL is required." unless @name
+      end
+
+      def is_git_url(name)
+        ['https://', 'http://', 'git@github'].each do |prefix|
+          return true if name.start_with? prefix
+        end
+        false
       end
 
       def run
-        spec = spec_with_name(@name)
+        if is_git_url(@name)
+          spec = spec_with_url(@name)
+        else
+          spec = spec_with_name(@name)
+        end
         update_specs_repos
         UI.title "Trying #{spec.name}" do
           pod_dir = install_pod(spec, TRY_TMP_DIR)
@@ -61,6 +72,28 @@ module Pod
         else
           raise Informative, "Unable to find a specification for `#{name}`"
         end
+      end
+
+      # Returns the specification found in the given Git repository URL by
+      # downloading the repository.
+      #
+      # @param  [String] url
+      #         The URL for the pod git repository.
+      #
+      # @return [Specification] The specification.
+      #
+      def spec_with_url(url)
+        name = url.split('/').last
+        name = name.chomp(".git") if name.end_with?(".git")
+
+        target_dir = TRY_TMP_DIR + name
+        target_dir.rmtree if target_dir.exist?
+
+        downloader = Pod::Downloader.for_target(target_dir, {:git => url})
+        downloader.download
+
+        spec_file = target_dir + (name + '.podspec')
+        Pod::Specification.from_file(spec_file)
       end
 
       # Installs the specification in the given directory.
