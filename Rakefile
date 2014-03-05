@@ -1,4 +1,5 @@
-require "bundler/gem_tasks"
+require 'bundler/gem_helper'
+Bundler::GemHelper.install_tasks(:name => "cocoapods-try-release-fix")
 
 def specs(dir)
   FileList["spec/#{dir}/*_spec.rb"].shuffle.join(' ')
