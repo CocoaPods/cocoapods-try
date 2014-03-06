@@ -23,7 +23,7 @@ module Pod
       end
 
       def is_git_url(name)
-        ['https://', 'http://', 'git@github'].each do |prefix|
+        ['https://', 'http://'].each do |prefix|
           return true if name.start_with? prefix
         end
         false
@@ -34,8 +34,8 @@ module Pod
           spec = spec_with_url(@name)
         else
           spec = spec_with_name(@name)
+          update_specs_repos
         end
-        update_specs_repos
         UI.title "Trying #{spec.name}" do
           pod_dir = install_pod(spec, TRY_TMP_DIR)
           proj = pick_demo_project(pod_dir)
