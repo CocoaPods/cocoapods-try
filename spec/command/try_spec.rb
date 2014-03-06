@@ -31,7 +31,7 @@ module Pod
         Config.instance.skip_repo_update = false
         command = Pod::Command.parse(['try', 'https://github.com/orta/ARAnalytics.git'])
         Installer::PodSourceInstaller.any_instance.expects(:install!)
-        command.expects(:update_specs_repos)
+        command.expects(:update_specs_repos).never
         command.expects(:pick_demo_project).returns("/tmp/Proj.xcodeproj")
         command.expects(:open_project).with('/tmp/Proj.xcodeproj')
         command.run
@@ -61,11 +61,6 @@ module Pod
 
         it "returns a spec for a github url" do
           spec = @sut.spec_with_url('https://github.com/orta/ARAnalytics')
-          spec.name.should == "ARAnalytics"
-        end
-
-        it "returns a spec for a git ssh url" do
-          spec = @sut.spec_with_url('git@github.com:orta/ARAnalytics.git')
           spec.name.should == "ARAnalytics"
         end
 
