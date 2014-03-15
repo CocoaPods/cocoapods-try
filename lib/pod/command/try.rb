@@ -135,7 +135,7 @@ module Pod
 
         if glob_match.count == 0
           raise Informative, "Unable to find any project in the source files" \
-            "of the Pod: `#{dir}`"
+            " of the Pod: `#{dir}`"
         elsif glob_match.count == 1
           glob_match.first
         elsif (workspaces = glob_match.grep(/(demo|example).*\.xcworkspace$/i)).count == 1
