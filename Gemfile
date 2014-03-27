@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gemspec :name => "cocoapods-try-release-fix"
+gemspec
 
 group :development do
   gem 'cocoapods'
