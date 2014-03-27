@@ -6,7 +6,6 @@ group :development do
   gem 'cocoapods'
   gem 'bacon'
   gem 'mocha-on-bacon'
-  gem 'mocha', '~> 0.11.4'
-  gem 'rake'
-  gem 'prettybacon', :git => 'https://github.com/irrationalfab/PrettyBacon.git', :branch => 'master'
+  gem 'rake', '~> 10.1.1' # Ruby 1.8.7
+  gem 'prettybacon'
 end
