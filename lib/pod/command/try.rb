@@ -11,7 +11,8 @@ module Pod
 
       self.description = <<-DESC
           Downloads the Pod with the given NAME (or Git URL), install its
-          depedencies if needed and opens its demo project.
+          depedencies if needed and opens its demo project. If a Git URL is
+          provided the head of the repo is used.
       DESC
 
       self.arguments = 'NAME_OR_URL'
