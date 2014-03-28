@@ -19,7 +19,7 @@ namespace :spec do
     start_time = Time.now
     sh "bundle exec bacon #{specs('**')}"
     duration = Time.now - start_time
-    puts "Tests completed in #{duration.round(1)}s"
+    puts "Tests completed in #{duration}s"
     Rake::Task["rubocop"].invoke
   end
 
