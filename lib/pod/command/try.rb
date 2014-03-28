@@ -7,10 +7,11 @@ module Pod
       self.summary = "Try a Pod!"
 
       self.description = <<-DESC
-          Downloads the Pod with the given NAME and opens its project.
+          Downloads the Pod with the given NAME (or GIT URL), install its
+          depedencies if needed and opens its demo project.
       DESC
 
-      self.arguments = 'NAME'
+      self.arguments = 'NAME_OR_URL'
 
       def initialize(argv)
         @name = argv.shift_argument

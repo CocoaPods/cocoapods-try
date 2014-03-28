@@ -5,7 +5,7 @@ module Pod
 
     #-------------------------------------------------------------------------#
 
-    describe "CLAide" do
+    describe "Try" do
       it "registers it self" do
         Command.parse(%w{ try }).should.be.instance_of Command::Try
       end
