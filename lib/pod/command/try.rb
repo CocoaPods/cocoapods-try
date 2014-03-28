@@ -125,29 +125,23 @@ module Pod
       # @return [String] The path of the project.
       #
       def pick_demo_project(dir)
-        glob_match = Dir.glob("#{dir}/**/*.xc{odeproj,workspace}")
-        glob_match = glob_match.reject do |p|
-          p.include?('Pods.xcodeproj') || \
-          p.end_with?('.xcodeproj/project.xcworkspace') || \
-          (p.end_with?('.xcodeproj') && glob_match.include?(p.chomp(File.extname(p.to_s)) + '.xcworkspace'))
-        end
-
-        if glob_match.count == 0
+        projs = projects_in_dir(dir)
+        if projs.count == 0
           raise Informative, "Unable to find any project in the source files" \
             " of the Pod: `#{dir}`"
-        elsif glob_match.count == 1
-          glob_match.first
-        elsif (workspaces = glob_match.grep(/(demo|example).*\.xcworkspace$/i)).count == 1
+        elsif projs.count == 1
+          projs.first
+        elsif (workspaces = projs.grep(/(demo|example).*\.xcworkspace$/i)).count == 1
           workspaces.first
-        elsif (projects = glob_match.grep(/demo|example/i)).count == 1
+        elsif (projects = projs.grep(/demo|example/i)).count == 1
           projects.first
         else
           message = "Which project would you like to open"
-          selection_array = glob_match.map do |p|
+          selection_array = projs.map do |p|
             Pathname.new(p).relative_path_from(dir).to_s
           end
           index = choose_from_array(selection_array, message)
-          glob_match[index]
+          projs[index]
         end
       end
 
@@ -251,6 +245,20 @@ module Pod
           true
         else
           false
+        end
+      end
+
+      # @return [Array<String>] The list of the workspaces and projects in a
+      #         given directory excluding The Pods project and the projects
+      #         that have a sister workspace.
+      #
+      def projects_in_dir(dir)
+        glob_match = Dir.glob("#{dir}/**/*.xc{odeproj,workspace}")
+        glob_match = glob_match.reject do |p|
+          next true if p.include?('Pods.xcodeproj')
+          next true if p.end_with?('.xcodeproj/project.xcworkspace')
+          sister_workspace = p.chomp(File.extname(p.to_s)) + '.xcworkspace'
+          p.end_with?('.xcodeproj') && glob_match.include?(sister_workspace)
         end
       end
 

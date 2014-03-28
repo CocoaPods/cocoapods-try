@@ -39,17 +39,12 @@ FileName:
 # Needs fixing
 #------------------------------------------------------------------------------
 
-CyclomaticComplexity:
-  Max: 8
-
 ClassLength:
-  Max: 139
+  Max: 200
 
 MethodLength:
-  Max: 10
-  Max: 23
+  Max: 18
 
-# Disabled because it includes comments
 LineLength:
   Enabled: false
 
