@@ -1,7 +1,7 @@
 require 'pathname'
 ROOT = Pathname.new(File.expand_path('../../', __FILE__))
-$:.unshift((ROOT + 'lib').to_s)
-$:.unshift((ROOT + 'spec').to_s)
+$LOAD_PATH.unshift((ROOT + 'lib').to_s)
+$LOAD_PATH.unshift((ROOT + 'spec').to_s)
 
 require 'bundler/setup'
 require 'bacon'
@@ -13,6 +13,8 @@ require 'cocoapods_plugin'
 
 #-----------------------------------------------------------------------------#
 
+# The CocoaPods namespace
+#
 module Pod
 
   # Disable the wrapping so the output is deterministic in the tests.

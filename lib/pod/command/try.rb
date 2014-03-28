@@ -1,3 +1,6 @@
+
+# The CocoaPods namespace
+#
 module Pod
   class Command
 
@@ -25,7 +28,7 @@ module Pod
 
       def run
         sandbox = Sandbox.new(TRY_TMP_DIR)
-        if is_git_url?(@name)
+        if git_url?(@name)
           spec = spec_with_url(@name)
           sandbox.store_pre_downloaded_pod(spec.name)
         else
@@ -86,7 +89,7 @@ module Pod
         target_dir = TRY_TMP_DIR + name
         target_dir.rmtree if target_dir.exist?
 
-        downloader = Pod::Downloader.for_target(target_dir, {:git => url})
+        downloader = Pod::Downloader.for_target(target_dir, { :git => url })
         downloader.download
 
         spec_file = target_dir + "#{name}.podspec"
@@ -148,9 +151,9 @@ module Pod
         end
       end
 
-      # Performs a CocoaPods installation for the given project if Podfile is found.
-      # Shells out to avoid issues with the config of the process running the
-      # try command.
+      # Performs a CocoaPods installation for the given project if Podfile is
+      # found.  Shells out to avoid issues with the config of the process
+      # running the try command.
       #
       # @return [String] proj
       #         The path of the project.
@@ -239,11 +242,10 @@ module Pod
         UI.puts `pod install`
       end
 
-
       # @return [Bool] Wether the given string is the name of a Pod or an URL
       #         for a Git repo.
       #
-      def is_git_url?(name)
+      def git_url?(name)
         prefixes = ['https://', 'http://']
         if prefixes.any? { |prefix| name.start_with?(prefix) }
           true
@@ -251,7 +253,6 @@ module Pod
           false
         end
       end
-
 
       #-------------------------------------------------------------------#
 

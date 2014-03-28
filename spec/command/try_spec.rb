@@ -1,5 +1,7 @@
 require File.expand_path('../../spec_helper', __FILE__)
 
+# The CocoaPods namespace
+#
 module Pod
   describe Command::Try do
 
@@ -7,19 +9,19 @@ module Pod
 
     describe "Try" do
       it "registers it self" do
-        Command.parse(%w{ try }).should.be.instance_of Command::Try
+        Command.parse(%w(try)).should.be.instance_of Command::Try
       end
 
       it "presents the help if no name is provided" do
         command = Pod::Command.parse(['try'])
         should.raise CLAide::Help do
           command.validate!
-        end.message.should.match /A Pod name or URL is required/
+        end.message.should.match(/A Pod name or URL is required/)
       end
 
       it "allows the user to try the Pod with the given name" do
         Config.instance.skip_repo_update = false
-        command = Pod::Command.parse(['try', 'ARAnalytics'])
+        command = Pod::Command.parse(%w(try ARAnalytics))
         Installer::PodSourceInstaller.any_instance.expects(:install!)
         command.expects(:update_specs_repos)
         command.expects(:pick_demo_project).returns("/tmp/Proj.xcodeproj")
@@ -31,7 +33,7 @@ module Pod
         require 'cocoapods-downloader/git'
         Pod::Downloader::GitHub.any_instance.expects(:download)
         spec_file = '/tmp/CocoaPods/Try/ARAnalytics/ARAnalytics.podspec'
-        stub_spec = stub(:name =>'ARAnalytics')
+        stub_spec = stub(:name => 'ARAnalytics')
         Pod::Specification.stubs(:from_file).with(Pathname(spec_file)).returns(stub_spec)
 
         Config.instance.skip_repo_update = false
@@ -64,7 +66,7 @@ module Pod
           require 'cocoapods-downloader/git'
           Pod::Downloader::GitHub.any_instance.expects(:download)
           spec_file = '/tmp/CocoaPods/Try/ARAnalytics/ARAnalytics.podspec'
-          stub_spec = stub()
+          stub_spec = stub
           Pod::Specification.stubs(:from_file).with(Pathname(spec_file)).returns(stub_spec)
           spec = @sut.spec_with_url('https://github.com/orta/ARAnalytics.git')
           spec.should == stub_spec
@@ -86,35 +88,35 @@ module Pod
           projects = []
           Dir.stubs(:glob).returns(projects)
           should.raise Informative do
-            @sut.pick_demo_project(stub())
-          end.message.should.match /Unable to find any project/
+            @sut.pick_demo_project(stub)
+          end.message.should.match(/Unable to find any project/)
         end
 
         it "picks a demo project" do
           projects = ['Demo.xcodeproj']
           Dir.stubs(:glob).returns(projects)
-          path = @sut.pick_demo_project(stub())
+          path = @sut.pick_demo_project(stub)
           path.should == "Demo.xcodeproj"
         end
 
         it "is not case sensitive" do
           projects = ['demo.xcodeproj']
           Dir.stubs(:glob).returns(projects)
-          path = @sut.pick_demo_project(stub())
+          path = @sut.pick_demo_project(stub)
           path.should == "demo.xcodeproj"
         end
 
         it "considers also projects named example" do
           projects = ['Example.xcodeproj']
           Dir.stubs(:glob).returns(projects)
-          path = @sut.pick_demo_project(stub())
+          path = @sut.pick_demo_project(stub)
           path.should == "Example.xcodeproj"
         end
 
         it "returns the project if only one is found" do
           projects = ['Lib.xcodeproj']
           Dir.stubs(:glob).returns(projects)
-          path = @sut.pick_demo_project(stub())
+          path = @sut.pick_demo_project(stub)
           path.should == "Lib.xcodeproj"
         end
 
@@ -122,7 +124,7 @@ module Pod
           projects = ['Lib_1.xcodeproj', 'Lib_2.xcodeproj']
           Dir.stubs(:glob).returns(projects)
           @sut.stubs(:choose_from_array).returns(0)
-          path = @sut.pick_demo_project(stub(:cleanpath=>''))
+          path = @sut.pick_demo_project(stub(:cleanpath => ''))
           path.should == "Lib_1.xcodeproj"
         end
 

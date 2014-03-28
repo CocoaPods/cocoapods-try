@@ -40,16 +40,14 @@ FileName:
 #------------------------------------------------------------------------------
 
 CyclomaticComplexity:
-  Max: 6
-  Max: 11
+  Max: 8
 
 ClassLength:
-  Max: 100
-  Max: 300
+  Max: 139
 
 MethodLength:
   Max: 10
-  Max: 27
+  Max: 23
 
 # Disabled because it includes comments
 LineLength:
