@@ -1,0 +1,58 @@
+HashSyntax:
+  EnforcedStyle: hash_rockets
+
+StringLiterals:
+  Enabled: false
+  EnforcedStyle: double_quotes
+
+SignalException:
+  EnforcedStyle: only_raise
+
+ConstantName:
+  Enabled: false
+
+IfUnlessModifier:
+  Enabled: false
+
+EmptyLinesAroundBody:
+  Enabled: false
+
+AsciiComments:
+  Enabled: false
+
+Proc:
+  Enabled: false
+
+BracesAroundHashParameters:
+  Enabled: false
+
+Encoding:
+  Enabled: false
+
+TrailingComma:
+  EnforcedStyleForMultiline: comma
+
+FileName:
+  Enabled: false
+
+#------------------------------------------------------------------------------
+# Needs fixing
+#------------------------------------------------------------------------------
+
+CyclomaticComplexity:
+  Max: 6
+  Max: 11
+
+ClassLength:
+  Max: 100
+  Max: 300
+
+MethodLength:
+  Max: 10
+  Max: 27
+
+# Disabled because it includes comments
+LineLength:
+  Enabled: false
+
+

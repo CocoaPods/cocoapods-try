@@ -23,3 +23,10 @@ namespace :spec do
 end
 
 task :default => "spec:ci"
+
+# Rubocop
+#-----------------------------------------------------------------------------#
+
+desc 'Checks code style'
+require 'rubocop/rake_task'
+Rubocop::RakeTask.new
