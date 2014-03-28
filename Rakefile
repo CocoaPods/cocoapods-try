@@ -20,9 +20,7 @@ namespace :spec do
     sh "bundle exec bacon #{specs('**')}"
     duration = Time.now - start_time
     puts "Tests completed in #{duration.round(1)}s"
-    if RUBY_VERSION >= '1.9.3'
-      Rake::Task["rubocop"].invoke
-    end
+    Rake::Task["rubocop"].invoke
   end
 
 end
@@ -32,9 +30,14 @@ task :default => "spec:ci"
 # Rubocop
 #-----------------------------------------------------------------------------#
 
-require 'rubocop/rake_task'
-desc 'Run RuboCop'
-Rubocop::RakeTask.new(:rubocop) do |task|
-  task.patterns = ['{spec,lib}/**/*.rb']
-  task.fail_on_error = true
+desc 'Checks code style'
+task :rubocop do
+  if RUBY_VERSION >= '1.9.3'
+    require 'rubocop'
+    cli = Rubocop::CLI.new
+    result = cli.run(FileList['{spec,lib}/**/*.rb'])
+    abort('RuboCop failed!') unless result == 0
+  else
+    puts "[!] Ruby > 1.9 is required to run style checks"
+  end
 end
