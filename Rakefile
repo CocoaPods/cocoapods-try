@@ -1,8 +1,9 @@
 require "bundler/gem_tasks"
 
-def specs(dir)
-  FileList["spec/#{dir}/*_spec.rb"].shuffle.join(' ')
-end
+task :default => "spec"
+
+# Bootstrap
+#-----------------------------------------------------------------------------#
 
 task :bootstrap, :use_bundle_dir? do |t, args|
   if args[:use_bundle_dir?]
@@ -12,20 +13,21 @@ task :bootstrap, :use_bundle_dir? do |t, args|
   end
 end
 
-namespace :spec do
+# Spec
+#-----------------------------------------------------------------------------#
 
-  desc "Runs all the specs"
-  task :ci do
-    start_time = Time.now
-    sh "bundle exec bacon #{specs('**')}"
-    duration = Time.now - start_time
-    puts "Tests completed in #{duration}s"
-    Rake::Task["rubocop"].invoke
-  end
-
+desc "Runs all the specs"
+task :spec do
+  start_time = Time.now
+  sh "bundle exec bacon #{specs('**')}"
+  duration = Time.now - start_time
+  puts "Tests completed in #{duration}s"
+  Rake::Task["rubocop"].invoke
 end
 
-task :default => "spec:ci"
+def specs(dir)
+  FileList["spec/#{dir}/*_spec.rb"].shuffle.join(' ')
+end
 
 # Rubocop
 #-----------------------------------------------------------------------------#

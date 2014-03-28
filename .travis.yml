@@ -7,4 +7,4 @@ before_install:
   - curl http://curl.haxx.se/ca/cacert.pem -o /usr/local/share/cacert.pem
   - source ~/.rvm/scripts/rvm && rvm use $RVM_RUBY_VERSION
 install: eval $RUBY_VERSION_SPECIFIC && rake bootstrap[use_bundle_dir]
-script: bundle exec rake spec:ci
+script: bundle exec rake spec
