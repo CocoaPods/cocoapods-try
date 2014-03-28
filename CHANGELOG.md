@@ -1,6 +1,6 @@
 # Cocoapods::Try Changelog
 
-## Master
+## 0.2.0
 
 ### Enhancements
 
