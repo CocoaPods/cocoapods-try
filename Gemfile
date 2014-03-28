@@ -7,5 +7,7 @@ group :development do
   gem 'bacon'
   gem 'mocha-on-bacon'
   gem 'prettybacon'
-  gem 'rubocop'
+  if RUBY_VERSION >= '1.9.3'
+    gem 'rubocop'
+  end
 end
