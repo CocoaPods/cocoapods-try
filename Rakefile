@@ -13,13 +13,18 @@ task :bootstrap, :use_bundle_dir? do |t, args|
 end
 
 namespace :spec do
+
   desc "Runs all the specs"
   task :ci do
     start_time = Time.now
     sh "bundle exec bacon #{specs('**')}"
     duration = Time.now - start_time
     puts "Tests completed in #{duration.round(1)}s"
+    if RUBY_VERSION >= '1.9.3'
+      Rake::Task["rubocop"].invoke
+    end
   end
+
 end
 
 task :default => "spec:ci"
@@ -27,6 +32,9 @@ task :default => "spec:ci"
 # Rubocop
 #-----------------------------------------------------------------------------#
 
-desc 'Checks code style'
 require 'rubocop/rake_task'
-Rubocop::RakeTask.new
+desc 'Run RuboCop'
+Rubocop::RakeTask.new(:rubocop) do |task|
+  task.patterns = ['{spec,lib}/**/*.rb']
+  task.fail_on_error = true
+end
