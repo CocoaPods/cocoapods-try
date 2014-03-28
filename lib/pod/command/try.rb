@@ -24,16 +24,17 @@ module Pod
       end
 
       def run
-        spec = nil
+        sandbox = Sandbox.new(TRY_TMP_DIR)
         if is_git_url?(@name)
           spec = spec_with_url(@name)
+          sandbox.store_pre_downloaded_pod(spec.name)
         else
           update_specs_repos
           spec = spec_with_name(@name)
         end
 
         UI.title "Trying #{spec.name}" do
-          pod_dir = install_pod(spec, TRY_TMP_DIR)
+          pod_dir = install_pod(spec, sandbox)
           proj = pick_demo_project(pod_dir)
           file = install_podfile(proj)
           if file
@@ -100,13 +101,12 @@ module Pod
       #
       # @return [Pathname] The path where the Pod was installed
       #
-      def install_pod(spec, dir)
-        sandbox = Sandbox.new(dir)
+      def install_pod(spec, sandbox)
         specs = { :ios => spec, :osx => spec }
         installer = Installer::PodSourceInstaller.new(sandbox, specs)
         installer.aggressive_cache = config.aggressive_cache?
         installer.install!
-        TRY_TMP_DIR + spec.name
+        sandbox.root + spec.name
       end
 
       # Picks a project or workspace suitable for the demo purposes in the

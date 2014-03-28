@@ -75,8 +75,10 @@ module Pod
       it "installs the pod" do
         Installer::PodSourceInstaller.any_instance.expects(:install!)
         spec = stub(:name => 'ARAnalytics')
-        path = @sut.install_pod(spec, '/tmp/CocoaPods/Try')
-        path.should == Pathname.new("/tmp/CocoaPods/Try/ARAnalytics")
+        sandbox_root = Pathname.new('/tmp/CocoaPods/Try')
+        sandbox = Sandbox.new(sandbox_root)
+        path = @sut.install_pod(spec, sandbox)
+        path.should == sandbox.root + "ARAnalytics"
       end
 
       describe "#pick_demo_project" do
