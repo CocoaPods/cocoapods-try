@@ -7,7 +7,7 @@ module Pod
       self.summary = "Try a Pod!"
 
       self.description = <<-DESC
-          Downloads the Pod with the given NAME (or GIT URL), install its
+          Downloads the Pod with the given NAME (or Git URL), install its
           depedencies if needed and opens its demo project.
       DESC
 
@@ -23,20 +23,15 @@ module Pod
         help! "A Pod name or URL is required." unless @name
       end
 
-      def is_git_url(name)
-        ['https://', 'http://'].each do |prefix|
-          return true if name.start_with? prefix
-        end
-        false
-      end
-
       def run
-        if is_git_url(@name)
+        spec = nil
+        if is_git_url?(@name)
           spec = spec_with_url(@name)
         else
-          spec = spec_with_name(@name)
           update_specs_repos
+          spec = spec_with_name(@name)
         end
+
         UI.title "Trying #{spec.name}" do
           pod_dir = install_pod(spec, TRY_TMP_DIR)
           proj = pick_demo_project(pod_dir)
@@ -79,7 +74,7 @@ module Pod
       # downloading the repository.
       #
       # @param  [String] url
-      #         The URL for the pod git repository.
+      #         The URL for the pod Git repository.
       #
       # @return [Specification] The specification.
       #
@@ -93,7 +88,7 @@ module Pod
         downloader = Pod::Downloader.for_target(target_dir, {:git => url})
         downloader.download
 
-        spec_file = target_dir + (name + '.podspec')
+        spec_file = target_dir + "#{name}.podspec"
         Pod::Specification.from_file(spec_file)
       end
 
@@ -243,6 +238,20 @@ module Pod
       def perform_cocoapods_installation
         UI.puts `pod install`
       end
+
+
+      # @return [Bool] Wether the given string is the name of a Pod or an URL
+      #         for a Git repo.
+      #
+      def is_git_url?(name)
+        prefixes = ['https://', 'http://']
+        if prefixes.any? { |prefix| name.start_with?(prefix) }
+          true
+        else
+          false
+        end
+      end
+
 
       #-------------------------------------------------------------------#
 
