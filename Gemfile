@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'cocoapods'
+  gem 'cocoapods',       :git => "https://github.com/CocoaPods/Cocoapods.git", :branch => 'master'
   gem 'bacon'
   gem 'mocha-on-bacon'
   gem 'mocha'
