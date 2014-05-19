@@ -15,7 +15,7 @@ module Pod
           provided the head of the repo is used.
       DESC
 
-      self.arguments = 'NAME_OR_URL'
+      self.arguments = [['NAME_OR_URL', :required]]
 
       def initialize(argv)
         @name = argv.shift_argument
