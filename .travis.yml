@@ -24,7 +24,7 @@ before_install:
 install:
   - bundle install --without=debugging documentation --path ./travis_bundle_dir
 
-script: rake spec
+script: bundle exec rake spec
 
 notifications:
   campfire:

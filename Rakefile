@@ -29,6 +29,7 @@ begin
 
   desc "Runs all the specs"
   task :spec do
+    puts "\033[0;32mUsing #{`ruby --version`}\033[0m"
     start_time = Time.now
     sh "bundle exec bacon #{specs('**')}"
     duration = Time.now - start_time
