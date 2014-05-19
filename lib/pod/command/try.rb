@@ -3,11 +3,10 @@
 #
 module Pod
   class Command
-
     # The pod try command.
     #
     class Try < Command
-      self.summary = "Try a Pod!"
+      self.summary = 'Try a Pod!'
 
       self.description = <<-DESC
           Downloads the Pod with the given NAME (or Git URL), install its
@@ -24,7 +23,7 @@ module Pod
 
       def validate!
         super
-        help! "A Pod name or URL is required." unless @name
+        help! 'A Pod name or URL is required.' unless @name
       end
 
       def run
@@ -85,12 +84,12 @@ module Pod
       #
       def spec_with_url(url)
         name = url.split('/').last
-        name = name.chomp(".git") if name.end_with?(".git")
+        name = name.chomp('.git') if name.end_with?('.git')
 
         target_dir = TRY_TMP_DIR + name
         target_dir.rmtree if target_dir.exist?
 
-        downloader = Pod::Downloader.for_target(target_dir, { :git => url })
+        downloader = Pod::Downloader.for_target(target_dir,  :git => url)
         downloader.download
 
         spec_file = target_dir + "#{name}.podspec"
@@ -128,7 +127,7 @@ module Pod
       def pick_demo_project(dir)
         projs = projects_in_dir(dir)
         if projs.count == 0
-          raise Informative, "Unable to find any project in the source files" \
+          raise Informative, 'Unable to find any project in the source files' \
             " of the Pod: `#{dir}`"
         elsif projs.count == 1
           projs.first
@@ -137,7 +136,7 @@ module Pod
         elsif (projects = projs.grep(/demo|example/i)).count == 1
           projects.first
         else
-          message = "Which project would you like to open"
+          message = 'Which project would you like to open'
           selection_array = projs.map do |p|
             Pathname.new(p).relative_path_from(dir).to_s
           end
@@ -264,7 +263,6 @@ module Pod
       end
 
       #-------------------------------------------------------------------#
-
     end
   end
 end
