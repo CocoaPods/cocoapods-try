@@ -4,9 +4,9 @@
 task :bootstrap, :use_bundle_dir? do |t, args|
   if system('which bundle')
     if args[:use_bundle_dir?]
-      sh "bundle install --path ./travis_bundle_dir"
+      sh 'bundle install --path ./travis_bundle_dir'
     else
-      sh "bundle install"
+      sh 'bundle install'
     end
   else
     $stderr.puts "\033[0;31m" \
@@ -19,22 +19,21 @@ end
 
 begin
 
-  require "bundler/gem_tasks"
+  require 'bundler/gem_tasks'
 
-  task :default => "spec"
-
+  task :default => 'spec'
 
   # Spec
   #-----------------------------------------------------------------------------#
 
-  desc "Runs all the specs"
+  desc 'Runs all the specs'
   task :spec do
     puts "\033[0;32mUsing #{`ruby --version`}\033[0m"
     start_time = Time.now
     sh "bundle exec bacon #{specs('**')}"
     duration = Time.now - start_time
     puts "Tests completed in #{duration}s"
-    Rake::Task["rubocop"].invoke
+    Rake::Task['rubocop'].invoke
   end
 
   def specs(dir)
@@ -52,7 +51,7 @@ begin
       result = cli.run(FileList['{spec,lib}/**/*.rb'])
       abort('RuboCop failed!') unless result == 0
     else
-      puts "[!] Ruby > 1.9 is required to run style checks"
+      puts '[!] Ruby > 1.9 is required to run style checks'
     end
   end
 
