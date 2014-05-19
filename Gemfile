@@ -6,6 +6,7 @@ group :development do
   gem 'cocoapods'
   gem 'bacon'
   gem 'mocha-on-bacon'
+  gem 'mocha'
   gem 'prettybacon'
 
   if RUBY_VERSION >= '1.9.3'
