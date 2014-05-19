@@ -1,5 +1,12 @@
 # Cocoapods::Try Changelog
 
+## 0.3.0
+
+### Enhancements
+
+* Adopted new CLAide release.  
+  [Fabio Pelosin](https://github.com/irrationalfab)
+
 ## 0.2.0
 
 ### Enhancements
