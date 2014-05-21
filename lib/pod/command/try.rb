@@ -9,12 +9,14 @@ module Pod
       self.summary = 'Try a Pod!'
 
       self.description = <<-DESC
-          Downloads the Pod with the given NAME (or Git URL), install its
+          Downloads the Pod with the given `NAME` (or Git `URL`), install its
           dependencies if needed and opens its demo project. If a Git URL is
           provided the head of the repo is used.
       DESC
 
-      self.arguments = [['NAME_OR_URL', :required]]
+      self.arguments = [
+          CLAide::Argument.new(['NAME','URL'], true)
+      ]
 
       def initialize(argv)
         @name = argv.shift_argument
