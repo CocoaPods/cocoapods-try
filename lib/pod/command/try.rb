@@ -14,9 +14,7 @@ module Pod
           provided the head of the repo is used.
       DESC
 
-      self.arguments = [
-          CLAide::Argument.new(['NAME','URL'], true)
-      ]
+      self.arguments = [CLAide::Argument.new(%w(NAME URL), true)]
 
       def initialize(argv)
         @name = argv.shift_argument
@@ -186,10 +184,9 @@ module Pod
       # @return [void] Updates the specs repo unless disabled by the config.
       #
       def update_specs_repos
-        unless config.skip_repo_update?
-          UI.section 'Updating spec repositories' do
-            SourcesManager.update
-          end
+        return if config.skip_repo_update?
+        UI.section 'Updating spec repositories' do
+          SourcesManager.update
         end
       end
 
