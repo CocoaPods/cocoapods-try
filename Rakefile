@@ -40,19 +40,11 @@ begin
     FileList["spec/#{dir}/*_spec.rb"].shuffle.join(' ')
   end
 
-  # Rubocop
-  #-----------------------------------------------------------------------------#
+  #-- Rubocop ----------------------------------------------------------------#
 
-  desc 'Checks code style'
-  task :rubocop do
-    if RUBY_VERSION >= '1.9.3'
-      require 'rubocop'
-      cli = Rubocop::CLI.new
-      result = cli.run(FileList['{spec,lib}/**/*.rb'])
-      abort('RuboCop failed!') unless result == 0
-    else
-      puts '[!] Ruby > 1.9 is required to run style checks'
-    end
+  if RUBY_VERSION >= '1.9.3'
+    require 'rubocop/rake_task'
+    RuboCop::RakeTask.new
   end
 
 rescue LoadError
