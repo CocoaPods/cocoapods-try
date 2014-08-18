@@ -107,7 +107,6 @@ module Pod
       def install_pod(spec, sandbox)
         specs = { :ios => spec, :osx => spec }
         installer = Installer::PodSourceInstaller.new(sandbox, specs)
-        installer.aggressive_cache = config.aggressive_cache?
         installer.install!
         sandbox.root + spec.name
       end
