@@ -1,16 +1,14 @@
-
-# Sets Travis to run the Ruby specs on OS X machines which are required to
-# build the native extensions of Xcodeproj.
+# Sets Travis to run the Ruby specs on OS X machines to be as close as possible
+# to the user environment.
 #
 language: objective-c
-
-env:
-  - RVM_RUBY_VERSION=system
-  - RVM_RUBY_VERSION=1.8.7-p358
-
 addons:
  code_climate:
    repo_token: e8abdb417b7d86d7427d8861e85209c7b194820bb372a1c05f0529835eac9c7c
+
+env:
+  - RVM_RUBY_VERSION=system
+  # - RVM_RUBY_VERSION=1.8.7-p358
 
 before_install:
   - export LANG=en_US.UTF-8
@@ -18,18 +16,10 @@ before_install:
   - source ~/.rvm/scripts/rvm
   - if [[ $RVM_RUBY_VERSION != 'system' ]]; then rvm install $RVM_RUBY_VERSION; fi
   - rvm use $RVM_RUBY_VERSION
-  - if [[ $RVM_RUBY_VERSION == 'system' ]]; then export ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future; fi
   - if [[ $RVM_RUBY_VERSION == 'system' ]]; then sudo gem install bundler --no-ri --no-rdoc; else gem install bundler --no-ri --no-rdoc; fi
 
+
 install:
-  - bundle install --without=debugging documentation --path ./travis_bundle_dir
+  - sudo bundle install --without=documentation
 
 script: bundle exec rake spec
-
-notifications:
-  campfire:
-    on_success: change
-    on_failure: always
-    rooms:
-      - secure: "qOE5zmgaHe/qQu3W9rmj7wygA5Ivl+cx50fqWGag2bdRl8ly5yj1NVoOKk/O\nZmQc4Lze+301uvTXi+r5v8A/tF6W1kUZw7yBiKuXoYFUGmDiVR9o2I/FPwkL\ngSzPJttrXTQfkQ4PbnrkX+JO+5bLWrKaO0hKXT4B2yUu4UXLVk0="
-
