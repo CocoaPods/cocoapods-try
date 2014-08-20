@@ -33,7 +33,8 @@ begin
     sh "bundle exec bacon #{specs('**')}"
     duration = Time.now - start_time
     puts "Tests completed in #{duration}s"
-    Rake::Task['rubocop'].invoke
+
+    Rake::Task['rubocop'].invoke if RUBY_VERSION >= '1.9.3'
   end
 
   def specs(dir)
