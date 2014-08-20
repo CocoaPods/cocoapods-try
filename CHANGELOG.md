@@ -1,5 +1,12 @@
 # Cocoapods::Try Changelog
 
+## Master
+
+### Enhancements
+
+* Adopted new argument format of CLAide.
+  [Olivier Halligon](https://github.com/AliSoftware)
+
 ## 0.3.0
 
 ### Enhancements
