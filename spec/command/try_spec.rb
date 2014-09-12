@@ -28,7 +28,7 @@ module Pod
 
       it 'allows the user to try the Pod with the given Git URL' do
         require 'cocoapods-downloader/git'
-        Pod::Downloader::GitHub.any_instance.expects(:download)
+        Pod::Downloader::Git.any_instance.expects(:download)
         spec_file = '/tmp/CocoaPods/Try/ARAnalytics/ARAnalytics.podspec'
         stub_spec = stub(:name => 'ARAnalytics')
         Pod::Specification.stubs(:from_file).with(Pathname(spec_file)).returns(stub_spec)
@@ -56,7 +56,7 @@ module Pod
       describe '#spec_at_url' do
         it 'returns a spec for an https git repo' do
           require 'cocoapods-downloader/git'
-          Pod::Downloader::GitHub.any_instance.expects(:download)
+          Pod::Downloader::Git.any_instance.expects(:download)
           spec_file = '/tmp/CocoaPods/Try/ARAnalytics/ARAnalytics.podspec'
           stub_spec = stub
           Pod::Specification.stubs(:from_file).with(Pathname(spec_file)).returns(stub_spec)
