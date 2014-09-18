@@ -16,7 +16,14 @@ module Pod
 
       self.arguments = [CLAide::Argument.new(%w(NAME URL), true)]
 
+      def self.options
+        [
+          ['--no-repo-update', 'Skip running `pod repo update` before install'],
+        ].concat(super)
+      end
+
       def initialize(argv)
+        config.skip_repo_update = !argv.flag?('repo-update', !config.skip_repo_update)
         @name = argv.shift_argument
         super
       end
