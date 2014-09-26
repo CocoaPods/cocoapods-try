@@ -1,5 +1,11 @@
 # Cocoapods::Try Changelog
 
+## 0.4.1
+
+* Add `--no-repo-update` option.  
+  [Eloy Durán](https://github.com/alloy)
+
+
 ## 0.4.0
 
 ### Enhancements
