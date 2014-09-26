@@ -8,7 +8,7 @@
 # Offense count: 1
 # Configuration parameters: CountComments.
 ClassLength:
-  Max: 144
+  Max: 148
 
 # Offense count: 11
 LineLength:
