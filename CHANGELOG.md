@@ -1,10 +1,16 @@
 # Cocoapods::Try Changelog
 
+## Master
+
+##### Bug Fixes
+
+* Ensure that the master repo is setup on try, related to: [CocoaPods/CocoaPods#2563](https://github.com/CocoaPods/CocoaPods/pull/2563)
+  [Daniel Tomlinson][https://github.com/DanielTomlinson]
+  
 ## 0.4.1
 
 * Add `--no-repo-update` option.  
   [Eloy Durán](https://github.com/alloy)
-
 
 ## 0.4.0
 
