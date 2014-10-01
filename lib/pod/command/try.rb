@@ -34,6 +34,7 @@ module Pod
       end
 
       def run
+        ensure_master_spec_repo_exists!
         sandbox = Sandbox.new(TRY_TMP_DIR)
         if git_url?(@name)
           spec = spec_with_url(@name)
