@@ -4,7 +4,7 @@
 
 ##### Bug Fixes
 
-* Ensure that the master repo is setup on try
+* Ensure that the master repo is setup on try, related to: [CocoaPods/CocoaPods#2563](https://github.com/CocoaPods/CocoaPods/pull/2563)
   [Daniel Tomlinson][https://github.com/DanielTomlinson]
   
 ## 0.4.1
