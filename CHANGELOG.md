@@ -1,5 +1,12 @@
 # Cocoapods::Try Changelog
 
+## Master
+
+### Enhancements
+
+* Prefer projects or workspaces with the name including Sample over others.
+  [Kyle Fuller](https://github.com/kylef)
+
 ## 0.4.1
 
 * Add `--no-repo-update` option.  
