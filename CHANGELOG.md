@@ -1,10 +1,8 @@
 # Cocoapods::Try Changelog
 
-## Master
+## 0.4.2
 
-### Enhancements
-
-* Prefer projects or workspaces with the name including Sample over others.
+* Prefer projects or workspaces with the name including Sample over others.  
   [Kyle Fuller](https://github.com/kylef)
 
 ## 0.4.1
