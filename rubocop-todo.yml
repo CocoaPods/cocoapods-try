@@ -17,7 +17,7 @@ LineLength:
 # Offense count: 3
 # Configuration parameters: CountComments.
 MethodLength:
-  Max: 18
+  Max: 20
 
 # Offense count: 1
 UnusedBlockArgument:
