@@ -247,11 +247,7 @@ module Pod
       #
       def git_url?(name)
         prefixes = ['https://', 'http://']
-        if prefixes.any? { |prefix| name.start_with?(prefix) }
-          true
-        else
-          false
-        end
+        prefixes.any? { |prefix| name.start_with?(prefix) }
       end
 
       # @return [Array<String>] The list of the workspaces and projects in a
