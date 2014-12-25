@@ -1,6 +1,6 @@
 # Cocoapods::Try Changelog
 
-## Master
+## 0.4.3
 
 ##### Bug Fixes
 
