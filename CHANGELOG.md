@@ -1,5 +1,14 @@
 # Cocoapods::Try Changelog
 
+## Master
+
+##### Bug Fixes
+
+* Fix working with the CocoaPods download cache introduced in 0.37.
+  [Samuel Giddins](https://github.com/)
+  [#30](https://github.com/CocoaPods/cocoapods-try/issues/30)
+
+
 ## 0.4.3
 
 ##### Bug Fixes

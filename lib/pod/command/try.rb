@@ -114,8 +114,11 @@ module Pod
       #
       def install_pod(spec, sandbox)
         specs = { :ios => spec, :osx => spec }
+        clean = config.clean
+        config.clean = false
         installer = Installer::PodSourceInstaller.new(sandbox, specs)
         installer.install!
+        config.clean = clean
         sandbox.root + spec.name
       end
 
