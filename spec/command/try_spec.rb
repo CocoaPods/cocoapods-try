@@ -5,6 +5,9 @@ require File.expand_path('../../spec_helper', __FILE__)
 module Pod
   describe Command::Try do
     describe 'Try' do
+      XCODE_PROJECT = Pod::Command::Try::TRY_TMP_DIR + 'Project.xcodeproj'
+      XCODE_WORKSPACE = Pod::Command::Try::TRY_TMP_DIR + 'Project.xcworkspace'
+
       it 'registers it self' do
         Command.parse(%w(try)).should.be.instance_of Command::Try
       end
@@ -21,15 +24,15 @@ module Pod
         command = Pod::Command.parse(%w(try ARAnalytics))
         Installer::PodSourceInstaller.any_instance.expects(:install!)
         command.expects(:update_specs_repos)
-        command.expects(:pick_demo_project).returns('/tmp/Proj.xcodeproj')
-        command.expects(:open_project).with('/tmp/Proj.xcodeproj')
+        command.expects(:pick_demo_project).returns(XCODE_PROJECT)
+        command.expects(:open_project).with(XCODE_PROJECT)
         command.run
       end
 
       it 'allows the user to try the Pod with the given Git URL' do
         require 'cocoapods-downloader/git'
         Pod::Downloader::Git.any_instance.expects(:download)
-        spec_file = '/tmp/CocoaPods/Try/ARAnalytics/ARAnalytics.podspec'
+        spec_file = Pod::Command::Try::TRY_TMP_DIR + 'ARAnalytics/ARAnalytics.podspec'
         stub_spec = stub(:name => 'ARAnalytics')
         Pod::Specification.stubs(:from_file).with(Pathname(spec_file)).returns(stub_spec)
 
@@ -37,8 +40,8 @@ module Pod
         command = Pod::Command.parse(['try', 'https://github.com/orta/ARAnalytics.git'])
         Installer::PodSourceInstaller.any_instance.expects(:install!)
         command.expects(:update_specs_repos).never
-        command.expects(:pick_demo_project).returns('/tmp/Proj.xcodeproj')
-        command.expects(:open_project).with('/tmp/Proj.xcodeproj')
+        command.expects(:pick_demo_project).returns(XCODE_PROJECT)
+        command.expects(:open_project).with(XCODE_PROJECT)
         command.run
       end
     end
@@ -57,7 +60,7 @@ module Pod
         it 'returns a spec for an https git repo' do
           require 'cocoapods-downloader/git'
           Pod::Downloader::Git.any_instance.expects(:download)
-          spec_file = '/tmp/CocoaPods/Try/ARAnalytics/ARAnalytics.podspec'
+          spec_file = Pod::Command::Try::TRY_TMP_DIR + 'ARAnalytics/ARAnalytics.podspec'
           stub_spec = stub
           Pod::Specification.stubs(:from_file).with(Pathname(spec_file)).returns(stub_spec)
           spec = @sut.spec_with_url('https://github.com/orta/ARAnalytics.git')
@@ -68,7 +71,7 @@ module Pod
       it 'installs the pod' do
         Installer::PodSourceInstaller.any_instance.expects(:install!)
         spec = stub(:name => 'ARAnalytics')
-        sandbox_root = Pathname.new('/tmp/CocoaPods/Try')
+        sandbox_root = Pathname.new(Pod::Command::Try::TRY_TMP_DIR)
         sandbox = Sandbox.new(sandbox_root)
         path = @sut.install_pod(spec, sandbox)
         path.should == sandbox.root + 'ARAnalytics'
@@ -141,26 +144,26 @@ module Pod
       describe '#install_podfile' do
         it 'returns the original project if no Podfile could be found' do
           Pathname.any_instance.stubs(:exist?).returns(false)
-          proj = '/tmp/Project.xcodeproj'
+          proj = XCODE_PROJECT
           path = @sut.install_podfile(proj)
           path.should == proj
         end
 
         it 'performs an installation and returns the path of the workspace' do
           Pathname.any_instance.stubs(:exist?).returns(true)
-          proj = '/tmp/Project.xcodeproj'
+          proj = XCODE_PROJECT
           @sut.expects(:perform_cocoapods_installation)
-          Podfile.stubs(:from_file).returns(stub(:workspace_path => '/tmp/Project.xcworkspace'))
+          Podfile.stubs(:from_file).returns(stub(:workspace_path => XCODE_WORKSPACE))
           path = @sut.install_podfile(proj)
-          path.should == '/tmp/Project.xcworkspace'
+          path.to_s.should == XCODE_WORKSPACE.to_s
         end
 
         it 'returns the default workspace if one is not set' do
           Pathname.any_instance.stubs(:exist?).returns(true)
-          proj = '/tmp/Project.xcodeproj'
+          proj = XCODE_PROJECT
           Podfile.stubs(:from_file).returns(stub(:workspace_path => nil))
           path = @sut.install_podfile(proj)
-          path.should == '/tmp/Project.xcworkspace'
+          path.to_s.should == XCODE_WORKSPACE.to_s
         end
       end
     end
