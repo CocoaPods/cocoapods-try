@@ -63,7 +63,7 @@ module Pod
 
       # @return [Pathname]
       #
-      TRY_TMP_DIR = Pathname.new('/tmp/CocoaPods/Try')
+      TRY_TMP_DIR = Pathname.new(Dir.tmpdir) + 'CocoaPods/Try'
 
       # Returns the specification of the last version of the Pod with the given
       # name.
@@ -178,7 +178,7 @@ module Pod
             if podfile.workspace_path
               File.expand_path(podfile.workspace_path)
             else
-              proj.chomp(File.extname(proj.to_s)) + '.xcworkspace'
+              proj.to_s.chomp(File.extname(proj.to_s)) + '.xcworkspace'
             end
           end
         else
