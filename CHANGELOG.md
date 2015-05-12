@@ -5,7 +5,7 @@
 ##### Bug Fixes
 
 * Use `Dir.tmpdir` instead of explicit `/tmp`.  
-  [Boris Bügling](https://github.com/)
+  [Boris Bügling](https://github.com/neonichu)
   [#34](https://github.com/CocoaPods/cocoapods-try/pull/34)
 
 
