@@ -1,5 +1,14 @@
 # Cocoapods::Try Changelog
 
+## Master
+
+##### Bug Fixes
+
+* Use `Dir.tmpdir` instead of explicit `/tmp`.  
+  [Boris Bügling](https://github.com/)
+  [#34](https://github.com/CocoaPods/cocoapods-try/pull/34)
+
+
 ## 0.4.4
 
 ##### Bug Fixes
