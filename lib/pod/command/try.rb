@@ -63,7 +63,7 @@ module Pod
 
       # @return [Pathname]
       #
-      TRY_TMP_DIR = Pathname.new(Dir.tmpdir) + Pathname.new('CocoaPods/Try')
+      TRY_TMP_DIR = Pathname.new(Dir.tmpdir) + 'CocoaPods/Try'
 
       # Returns the specification of the last version of the Pod with the given
       # name.
