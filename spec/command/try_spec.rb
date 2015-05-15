@@ -117,7 +117,7 @@ module Pod
         it 'asks the user which project would like to open if not a single suitable one is found' do
           projects = ['Lib_1.xcodeproj', 'Lib_2.xcodeproj']
           Dir.stubs(:glob).returns(projects)
-          @sut.stubs(:choose_from_array).returns(0)
+          UI.stubs(:choose_from_array).returns(0)
           path = @sut.pick_demo_project(stub(:cleanpath => ''))
           path.should == 'Lib_1.xcodeproj'
         end

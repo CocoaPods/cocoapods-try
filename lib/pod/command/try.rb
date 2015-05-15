@@ -150,7 +150,7 @@ module Pod
           selection_array = projs.map do |p|
             Pathname.new(p).relative_path_from(dir).to_s
           end
-          index = choose_from_array(selection_array, message)
+          index = UI.choose_from_array(selection_array, message)
           projs[index]
         end
       end
@@ -210,32 +210,6 @@ module Pod
       def open_project(path)
         UI.puts "Opening '#{path}'"
         `open "#{path}"`
-      end
-
-      # Presents a choice among the elements of an array to the user.
-      #
-      # @param  [Array<#to_s>] array
-      #         The list of the elements among which the user should make his
-      #         choice.
-      #
-      # @param  [String] message
-      #         The message to display to the user.
-      #
-      # @return [Fixnum] The index of the chosen array item.
-      #
-      # @todo   This method was duplicated from the spec subcommands
-      #
-      def choose_from_array(array, message)
-        array.each_with_index do |item, index|
-          UI.puts "#{ index + 1 }: #{ item }"
-        end
-        UI.puts "#{message} [1-#{array.count}]?"
-        index = STDIN.gets.chomp.to_i - 1
-        if index < 0 || index > array.count
-          raise Informative, "#{ index + 1 } is invalid [1-#{array.count}]"
-        else
-          index
-        end
       end
 
       # @return [void] Performs a CocoaPods installation in the working
