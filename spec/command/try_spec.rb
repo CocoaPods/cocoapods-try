@@ -33,8 +33,9 @@ module Pod
         require 'cocoapods-downloader/git'
         Pod::Downloader::Git.any_instance.expects(:download)
         spec_file = Pod::Command::Try::TRY_TMP_DIR + 'ARAnalytics/ARAnalytics.podspec'
+        Pathname.stubs(:glob).once.returns([spec_file])
         stub_spec = stub(:name => 'ARAnalytics')
-        Pod::Specification.stubs(:from_file).with(Pathname(spec_file)).returns(stub_spec)
+        Pod::Specification.stubs(:from_file).with(spec_file).returns(stub_spec)
 
         Config.instance.skip_repo_update = false
         command = Pod::Command.parse(['try', 'https://github.com/orta/ARAnalytics.git'])
@@ -61,8 +62,9 @@ module Pod
           require 'cocoapods-downloader/git'
           Pod::Downloader::Git.any_instance.expects(:download)
           spec_file = Pod::Command::Try::TRY_TMP_DIR + 'ARAnalytics/ARAnalytics.podspec'
+          Pathname.stubs(:glob).once.returns([spec_file])
           stub_spec = stub
-          Pod::Specification.stubs(:from_file).with(Pathname(spec_file)).returns(stub_spec)
+          Pod::Specification.stubs(:from_file).with(spec_file).returns(stub_spec)
           spec = @sut.spec_with_url('https://github.com/orta/ARAnalytics.git')
           spec.should == stub_spec
         end

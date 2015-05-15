@@ -100,7 +100,7 @@ module Pod
         downloader = Pod::Downloader.for_target(target_dir,  :git => url)
         downloader.download
 
-        spec_file = target_dir + "#{name}.podspec"
+        spec_file = Pathname.glob(target_dir + "#{name}.podspec{,.json}").first
         Pod::Specification.from_file(spec_file)
       end
 

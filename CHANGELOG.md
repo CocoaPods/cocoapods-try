@@ -8,6 +8,10 @@
   [Boris Bügling](https://github.com/neonichu)
   [#34](https://github.com/CocoaPods/cocoapods-try/pull/34)
 
+* Automatically detect JSON podspecs.  
+  [Samuel Giddins](https://github.com/segiddins)
+  [#35](https://github.com/CocoaPods/cocoapods-try/issues/35)
+
 
 ## 0.4.4
 
