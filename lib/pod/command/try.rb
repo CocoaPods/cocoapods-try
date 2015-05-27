@@ -242,13 +242,8 @@ module Pod
       #         directory.
       #
       def perform_cocoapods_installation
-        UI.titled_section "Performing CocoaPods Installation" do
-          podfile_path = Pathname.pwd + 'Podfile'
-          lockfile_path = Pathname.pwd + 'Podfile.lock'
-          podfile = Podfile.from_file(podfile_path)
-          lockfile = Lockfile.from_file(lockfile_path) if lockfile_path.exist?
-          installer = Installer.new(config.sandbox, podfile, lockfile)
-          installer.install!
+        UI.titled_section 'Performing CocoaPods Installation' do
+          Command::Install.invoke
         end
       end
 

@@ -164,6 +164,7 @@ module Pod
           Pathname.any_instance.stubs(:exist?).returns(true)
           proj = XCODE_PROJECT
           Podfile.stubs(:from_file).returns(stub(:workspace_path => nil))
+          @sut.expects(:perform_cocoapods_installation).once
           path = @sut.install_podfile(proj)
           path.to_s.should == XCODE_WORKSPACE.to_s
         end
