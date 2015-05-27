@@ -242,7 +242,9 @@ module Pod
       #         directory.
       #
       def perform_cocoapods_installation
-        UI.puts `pod install`
+        UI.titled_section 'Performing CocoaPods Installation' do
+          Command::Install.invoke
+        end
       end
 
       # @return [Bool] Wether the given string is the name of a Pod or an URL
