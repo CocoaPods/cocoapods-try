@@ -37,7 +37,7 @@ GIT
 PATH
   remote: .
   specs:
-    cocoapods-try (0.4.4)
+    cocoapods-try (0.4.5)
 
 GEM
   remote: https://rubygems.org/
