@@ -67,6 +67,32 @@ eos
       end
     end
 
+    it 'handles not including system commands in the pre-install' do
+      Dir.mktmpdir do |dir|
+        yaml = <<eos
+          try:
+            project: 'ORStackView.xcworkspace'
+eos
+        File.open(dir + '/.cocoapods.yml', 'w') { |f| f.write(yaml) }
+
+        settings = TrySettings.settings_from_folder dir
+        settings.project_path.should == Pathname.new(dir) + 'ORStackView.xcworkspace'
+      end
+    end
+
+    it 'handles not including the try in the yaml' do
+      Dir.mktmpdir do |dir|
+        yaml = <<eos
+          thing: "other"
+eos
+        File.open(dir + '/.cocoapods.yml', 'w') { |f| f.write(yaml) }
+
+        settings = TrySettings.settings_from_folder dir
+        settings.pre_install_commands.should.be.nil?
+        settings.project_path.should.be.nil?
+      end
+    end
+
     it 'does not show a prompt with no pre_install commands' do
       Dir.mktmpdir do |dir|
         TrySettings.any_instance.expects(:prompt_for_permission).never

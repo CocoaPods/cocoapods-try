@@ -10,10 +10,16 @@ module Pod
 
       settings = YAML.load(File.read(settings_path))
       try_settings = TrySettings.new
-      try_settings.pre_install_commands = Array(settings['try']['install']['pre'])
+      return try_settings unless settings['try']
+
+      if settings['try']['install']
+        try_settings.pre_install_commands = Array(settings['try']['install']['pre'])
+      end
+
       if settings['try']['project']
         try_settings.project_path = Pathname.new(path) + settings['try']['project']
       end
+
       try_settings
     end
 
