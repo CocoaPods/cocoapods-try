@@ -1,5 +1,26 @@
 # Cocoapods::Try Changelog
 
+## Master
+
+##### Enhancements
+
+* A CocoaPods can now declare their own pre-install commands, and prefer a project.
+  To use this, add a `.cocoapods.yml` file to your repo. The yaml file should have
+  a structure like:
+
+  ``` yaml
+  try:
+    install:
+      pre:
+        - pod install
+        - git submodule init
+    project: 'ORStackView.xcworkspace'
+  ```
+
+  [Orta Therox](https://github.com/orta)
+  Fixes [cocoapods-try#33](https://github.com/CocoaPods/cocoapods-try/issues/33)
+
+
 ## 0.4.5
 
 ##### Bug Fixes
