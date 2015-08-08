@@ -5,8 +5,8 @@
 ##### Enhancements
 
 * A CocoaPods can now declare their own pre-install commands, and prefer a project.
-  To use this, add a `.cocoapods.yml` file to your repo. The yaml file should have
-  a structure like:
+  To use this, add a `.cocoapods.yml` file to the root of your repo. The yaml file
+  should have a structure like:
 
   ``` yaml
   try:
