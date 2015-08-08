@@ -17,10 +17,12 @@ module Pod
     it 'returns an instance with the right defaults when there are no yml settings files' do
       Dir.mktmpdir do |dir|
         yaml = <<eos
-          try_pre_install:
-            - pod install
-            - git submodule init
-          try_project: 'ORStackView.xcworkspace'
+          try:
+            install:
+              pre:
+                - pod install
+                - git submodule init
+            project: 'ORStackView.xcworkspace'
 eos
         File.open(dir + '/.cocoapods.yml', 'w') { |f| f.write(yaml) }
 
@@ -33,7 +35,11 @@ eos
 
     it 'converts a string for the pre_install hook to a single object array' do
       Dir.mktmpdir do |dir|
-        yaml = "try_pre_install: 'pod install'"
+        yaml = <<eos
+          try:
+            install:
+              pre: pod install
+eos
         File.open(dir + '/.cocoapods.yml', 'w') { |f| f.write(yaml) }
 
         settings = TrySettings.settings_from_folder dir
@@ -45,9 +51,11 @@ eos
     it 'handles running commands in the pre-install' do
       Dir.mktmpdir do |dir|
         yaml = <<eos
-          try_pre_install:
-            - pod install
-            - git submodule init
+          try:
+            install:
+              pre:
+                - pod install
+                - git submodule init
 eos
         File.open(dir + '/.cocoapods.yml', 'w') { |f| f.write(yaml) }
 
