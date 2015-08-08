@@ -5,15 +5,15 @@ module Pod
     # Creates a TrySettings instance based on a folder path
     #
     def self.settings_from_folder(path)
-      settings_path = path + '/.cocoapods.yml'
-      settings_path = path + '/.cocoapods-try.yml' unless File.exist? settings_path
+      settings_path = Pathname.new(path) + '.cocoapods.yml'
       return TrySettings.new unless File.exist? settings_path
 
       settings = YAML.load(File.read(settings_path))
-
       try_settings = TrySettings.new
       try_settings.pre_install_commands = Array(settings['try']['install']['pre'])
-      try_settings.project_path = settings['try']['project']
+      if settings['try']['project']
+        try_settings.project_path = Pathname.new(path) + settings['try']['project']
+      end
       try_settings
     end
 
@@ -22,17 +22,14 @@ module Pod
     #
     def prompt_for_permission
       UI.titled_section 'Running Pre-Install Commands' do
-        UI.puts 'In order to try this pod, CocoaPods-Try needs to run the following commands:'
+        commands = pre_install_commands.length > 1 ? 'commands' : 'command'
+        UI.puts "In order to try this pod, CocoaPods-Try needs to run the following #{commands}:"
         pre_install_commands.each { |command| UI.puts " - #{command}" }
-        UI.puts '\nPress return to continue, or cmd + c to stop trying this pod.'
+        UI.puts "\nPress return to run these #{commands}, or press `cmd + c` to stop trying this pod."
       end
 
       # Give an elegant exit point.
-      begin
-        gets.chomp
-      rescue
-        exit
-      end
+      UI.gets.chomp
     end
 
     # Runs the pre_install_commands from

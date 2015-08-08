@@ -107,7 +107,7 @@ module Pod
         target_dir = TRY_TMP_DIR + name
         target_dir.rmtree if target_dir.exist?
 
-        downloader = Pod::Downloader.for_target(target_dir,  :git => url)
+        downloader = Pod::Downloader.for_target(target_dir, :git => url)
         downloader.download
 
         spec_file = Pathname.glob(target_dir + "#{name}.podspec{,.json}").first

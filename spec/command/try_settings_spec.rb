@@ -29,7 +29,7 @@ eos
         settings = TrySettings.settings_from_folder dir
         settings.should.be.instance_of TrySettings
         settings.pre_install_commands.should == ['pod install', 'git submodule init']
-        settings.project_path.should == 'ORStackView.xcworkspace'
+        settings.project_path.should == Pathname.new(dir) + 'ORStackView.xcworkspace'
       end
     end
 
