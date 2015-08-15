@@ -5,6 +5,7 @@ AllCops:
     - ./*.gemspec
   Exclude:
     - ./spec/fixtures/**/*
+    - ./vendor/bundle/**/*
 
 # At the moment not ready to be used
 # https://github.com/bbatsov/rubocop/issues/947
@@ -58,6 +59,16 @@ Next:
 Metrics/ClassLength:
   Enabled: false
 
+# Arbitrary max lengths for modules simply do not work and enabling this will
+# lead to a never ending stream of annoyance and changes.
+Metrics/ModuleLength:
+  Enabled: false
+
+# Arbitrary max lengths for methods simply do not work and enabling this will
+# lead to a never ending stream of annoyance and changes.
+Metrics/MethodLength:
+  Enabled: false
+
 # No enforced convention here.
 Metrics/BlockNesting:
   Enabled: false
@@ -108,4 +119,3 @@ ClassAndModuleChildren:
 UselessComparison:
   Exclude:
     - spec/**/*
-

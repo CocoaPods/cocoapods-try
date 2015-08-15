@@ -1,3 +1,4 @@
+require 'pod/try_settings'
 
 # The CocoaPods namespace
 #
@@ -36,17 +37,13 @@ module Pod
       def run
         ensure_master_spec_repo_exists!
         sandbox = Sandbox.new(TRY_TMP_DIR)
-        if git_url?(@name)
-          spec = spec_with_url(@name)
-          sandbox.store_pre_downloaded_pod(spec.name)
-        else
-          update_specs_repos
-          spec = spec_with_name(@name)
-        end
+        spec = setup_spec_in_sandbox(sandbox)
 
         UI.title "Trying #{spec.name}" do
           pod_dir = install_pod(spec, sandbox)
-          proj = pick_demo_project(pod_dir)
+          settings = TrySettings.settings_from_folder(pod_dir)
+          settings.run_pre_install_commands(true)
+          proj = settings.project_path || pick_demo_project(pod_dir)
           file = install_podfile(proj)
           if file
             open_project(file)
@@ -64,6 +61,19 @@ module Pod
       # @return [Pathname]
       #
       TRY_TMP_DIR = Pathname.new(Dir.tmpdir) + 'CocoaPods/Try'
+
+      # Puts the spec's data in the sandbox
+      #
+      def setup_spec_in_sandbox(sandbox)
+        if git_url?(@name)
+          spec = spec_with_url(@name)
+          sandbox.store_pre_downloaded_pod(spec.name)
+        else
+          update_specs_repos
+          spec = spec_with_name(@name)
+        end
+        spec
+      end
 
       # Returns the specification of the last version of the Pod with the given
       # name.
@@ -97,7 +107,7 @@ module Pod
         target_dir = TRY_TMP_DIR + name
         target_dir.rmtree if target_dir.exist?
 
-        downloader = Pod::Downloader.for_target(target_dir,  :git => url)
+        downloader = Pod::Downloader.for_target(target_dir, :git => url)
         downloader.download
 
         spec_file = Pathname.glob(target_dir + "#{name}.podspec{,.json}").first
