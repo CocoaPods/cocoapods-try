@@ -8,7 +8,7 @@ module Pod
       settings_path = Pathname.new(path) + '.cocoapods.yml'
       return TrySettings.new unless File.exist? settings_path
 
-      settings = YAML.load(File.read(settings_path))
+      settings = YAMLHelper.load_file(settings_path)
       try_settings = TrySettings.new
       return try_settings unless settings['try']
 
@@ -31,7 +31,7 @@ module Pod
         commands = pre_install_commands.length > 1 ? 'commands' : 'command'
         UI.puts "In order to try this pod, CocoaPods-Try needs to run the following #{commands}:"
         pre_install_commands.each { |command| UI.puts " - #{command}" }
-        UI.puts "\nPress return to run these #{commands}, or press `cmd + c` to stop trying this pod."
+        UI.puts "\nPress return to run these #{commands}, or press `ctrl + c` to stop trying this pod."
       end
 
       # Give an elegant exit point.
@@ -46,7 +46,7 @@ module Pod
     def run_pre_install_commands(prompt)
       if pre_install_commands
         prompt_for_permission if prompt
-        pre_install_commands.each { |command| system command }
+        pre_install_commands.each { |command| Executable.execute_command('bash', ['-e', command], true) }
       end
     end
   end

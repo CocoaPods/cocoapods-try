@@ -16,14 +16,14 @@ module Pod
 
     it 'returns an instance with the right defaults when there are no yml settings files' do
       Dir.mktmpdir do |dir|
-        yaml = <<eos
+        yaml = <<YAML
           try:
             install:
               pre:
                 - pod install
                 - git submodule init
             project: 'ORStackView.xcworkspace'
-eos
+YAML
         File.open(dir + '/.cocoapods.yml', 'w') { |f| f.write(yaml) }
 
         settings = TrySettings.settings_from_folder dir
@@ -35,11 +35,11 @@ eos
 
     it 'converts a string for the pre_install hook to a single object array' do
       Dir.mktmpdir do |dir|
-        yaml = <<eos
+        yaml = <<YAML
           try:
             install:
               pre: pod install
-eos
+YAML
         File.open(dir + '/.cocoapods.yml', 'w') { |f| f.write(yaml) }
 
         settings = TrySettings.settings_from_folder dir
@@ -50,17 +50,17 @@ eos
 
     it 'handles running commands in the pre-install' do
       Dir.mktmpdir do |dir|
-        yaml = <<eos
+        yaml = <<YAML
           try:
             install:
               pre:
                 - pod install
                 - git submodule init
-eos
+YAML
         File.open(dir + '/.cocoapods.yml', 'w') { |f| f.write(yaml) }
 
-        TrySettings.any_instance.expects(:system).with('pod install')
-        TrySettings.any_instance.expects(:system).with('git submodule init')
+        Executable.expects(:execute_command).with('bash', ['-e', 'pod install'], true)
+        Executable.expects(:execute_command).with('bash', ['-e', 'git submodule init'], true)
 
         settings = TrySettings.settings_from_folder dir
         settings.run_pre_install_commands false
@@ -69,10 +69,10 @@ eos
 
     it 'handles not including system commands in the pre-install' do
       Dir.mktmpdir do |dir|
-        yaml = <<eos
+        yaml = <<YAML
           try:
             project: 'ORStackView.xcworkspace'
-eos
+YAML
         File.open(dir + '/.cocoapods.yml', 'w') { |f| f.write(yaml) }
 
         settings = TrySettings.settings_from_folder dir
@@ -82,9 +82,9 @@ eos
 
     it 'handles not including the try in the yaml' do
       Dir.mktmpdir do |dir|
-        yaml = <<eos
+        yaml = <<YAML
           thing: "other"
-eos
+YAML
         File.open(dir + '/.cocoapods.yml', 'w') { |f| f.write(yaml) }
 
         settings = TrySettings.settings_from_folder dir

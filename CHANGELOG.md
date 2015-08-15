@@ -18,7 +18,7 @@
   ```
 
   [Orta Therox](https://github.com/orta)
-  Fixes [cocoapods-try#33](https://github.com/CocoaPods/cocoapods-try/issues/33)
+  [#33](https://github.com/CocoaPods/cocoapods-try/issues/33)
 
 
 ## 0.4.5
