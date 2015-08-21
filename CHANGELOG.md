@@ -21,7 +21,7 @@
   [#33](https://github.com/CocoaPods/cocoapods-try/issues/33)
 
 
-## 0.4.5
+## 0.4.5 (2015-05-27)
 
 ##### Bug Fixes
 
@@ -34,7 +34,7 @@
   [#35](https://github.com/CocoaPods/cocoapods-try/issues/35)
 
 
-## 0.4.4
+## 0.4.4 (2015-05-06)
 
 ##### Bug Fixes
 
@@ -43,7 +43,7 @@
   [#30](https://github.com/CocoaPods/cocoapods-try/issues/30)
 
 
-## 0.4.3
+## 0.4.3 (2014-12-25)
 
 ##### Bug Fixes
 
@@ -51,31 +51,31 @@
   [Daniel Tomlinson](https://github.com/DanielTomlinson)
   [CocoaPods/CocoaPods#2563](https://github.com/CocoaPods/CocoaPods/pull/2563)
 
-## 0.4.2
+## 0.4.2 (2014-10-29)
 
 * Prefer projects or workspaces with the name including Sample over others.  
   [Kyle Fuller](https://github.com/kylef)
 
-## 0.4.1
+## 0.4.1 (2014-09-26)
 
 * Add `--no-repo-update` option.  
   [Eloy Durán](https://github.com/alloy)
 
-## 0.4.0
+## 0.4.0 (2014-09-11)
 
 ### Enhancements
 
 * Adopted new argument format of CLAide.  
   [Olivier Halligon](https://github.com/AliSoftware)
 
-## 0.3.0
+## 0.3.0 (2014-05-19)
 
 ### Enhancements
 
 * Adopted new CLAide release.  
   [Fabio Pelosin](https://github.com/irrationalfab)
 
-## 0.2.0
+## 0.2.0 (2014-03-28)
 
 ### Enhancements
 
@@ -101,7 +101,7 @@
 * Typo fixes.  
   [Mark Townsend](https://github.com/markltownsend)
 
-## 0.1.0
+## 0.1.0 (2013-12-02)
 
 * Initial implementation.  
   [Fabio Pelosin](https://github.com/fabiopelosin)
