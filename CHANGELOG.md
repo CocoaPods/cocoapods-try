@@ -1,5 +1,13 @@
 # Cocoapods::Try Changelog
 
+## 0.5.1 (2015-08-28)
+
+##### Bug Fixes
+
+* This release fixes a file permissions error when using the RubyGem.  
+  [Samuel Giddins](https://github.com/segiddins)
+
+
 ## 0.5.0 (2015-08-26)
 
 ##### Enhancements
