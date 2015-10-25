@@ -1,5 +1,15 @@
 # Cocoapods::Try Changelog
 
+
+## Master
+
+##### Bug Fixes
+
+* Ensure commands in the `.cocoapods` file are strings, and uses the pods folder when executing commands.  
+  [Samuel Giddins](https://github.com/segiddins)
+  [CocoaPods-Try#40](https://github.com/CocoaPods/cocoapods-try/issues/40)
+
+
 ## 0.5.1 (2015-08-28)
 
 ##### Bug Fixes
