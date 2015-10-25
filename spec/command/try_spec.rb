@@ -19,14 +19,28 @@ module Pod
         end.message.should.match(/A Pod name or URL is required/)
       end
 
+      before do
+        @original_install_method = method = Pod::Command::Try.instance_method(:install_pod)
+        Pod::Command::Try.send(:define_method, :install_pod) do |*args|
+          dir = method.bind(self).call(*args)
+          FileUtils.mkdir_p(dir)
+          dir
+        end
+      end
+
+      after do
+        Pod::Command::Try.send(:define_method, :install_pod, @original_install_method)
+      end
+
       it 'allows the user to try the Pod with the given name' do
-        Config.instance.skip_repo_update = false
-        command = Pod::Command.parse(%w(try ARAnalytics))
-        Installer::PodSourceInstaller.any_instance.expects(:install!)
-        command.expects(:update_specs_repos)
-        command.expects(:pick_demo_project).returns(XCODE_PROJECT)
-        command.expects(:open_project).with(XCODE_PROJECT)
-        command.run
+        Config.instance.with_changes(:skip_repo_update => false) do
+          command = Pod::Command.parse(%w(try ARAnalytics))
+          Installer::PodSourceInstaller.any_instance.expects(:install!)
+          command.expects(:update_specs_repos)
+          command.expects(:pick_demo_project).returns(XCODE_PROJECT)
+          command.expects(:open_project).with(XCODE_PROJECT)
+          command.run
+        end
       end
 
       it 'allows the user to try the Pod with the given Git URL' do

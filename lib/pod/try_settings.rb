@@ -46,7 +46,7 @@ module Pod
     def run_pre_install_commands(prompt)
       if pre_install_commands
         prompt_for_permission if prompt
-        pre_install_commands.each { |command| Executable.execute_command('bash', ['-e', command], true) }
+        pre_install_commands.each { |command| Executable.execute_command('bash', ['-ec', command], true) }
       end
     end
   end
