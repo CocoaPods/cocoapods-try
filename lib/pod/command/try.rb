@@ -42,7 +42,7 @@ module Pod
         UI.title "Trying #{spec.name}" do
           pod_dir = install_pod(spec, sandbox)
           settings = TrySettings.settings_from_folder(pod_dir)
-          settings.run_pre_install_commands(true)
+          Dir.chdir(pod_dir) { settings.run_pre_install_commands(true) }
           proj = settings.project_path || pick_demo_project(pod_dir)
           file = install_podfile(proj)
           if file
@@ -124,12 +124,11 @@ module Pod
       #
       def install_pod(spec, sandbox)
         specs = { :ios => spec, :osx => spec }
-        clean = config.clean
-        config.clean = false
-        installer = Installer::PodSourceInstaller.new(sandbox, specs)
-        installer.install!
-        config.clean = clean
-        sandbox.root + spec.name
+        config.with_changes(:clean => false) do
+          installer = Installer::PodSourceInstaller.new(sandbox, specs)
+          installer.install!
+          sandbox.root + spec.name
+        end
       end
 
       # Picks a project or workspace suitable for the demo purposes in the
