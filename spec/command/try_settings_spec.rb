@@ -59,8 +59,8 @@ YAML
 YAML
         File.open(dir + '/.cocoapods.yml', 'w') { |f| f.write(yaml) }
 
-        Executable.expects(:execute_command).with('bash', ['-e', 'pod install'], true)
-        Executable.expects(:execute_command).with('bash', ['-e', 'git submodule init'], true)
+        Executable.expects(:execute_command).with('bash', ['-ec', 'pod install'], true)
+        Executable.expects(:execute_command).with('bash', ['-ec', 'git submodule init'], true)
 
         settings = TrySettings.settings_from_folder dir
         settings.run_pre_install_commands false
