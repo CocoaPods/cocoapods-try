@@ -1,5 +1,14 @@
 # Cocoapods::Try Changelog
 
+## Master
+
+##### Bug Fixes
+
+* Ensure that the pod's source is re-downloaded, instead of pulling from the
+  cache, which only holds cleaned sources.  
+  [Samuel Giddins](https://github.com/segiddins)
+  [#43](https://github.com/CocoaPods/cocoapods-try/issues/43)
+
 
 ## 1.0.0.beta.1 (2015-12-30)
 
