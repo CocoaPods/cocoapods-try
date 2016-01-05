@@ -124,11 +124,9 @@ module Pod
       #
       def install_pod(spec, sandbox)
         specs = { :ios => spec, :osx => spec }
-        config.with_changes(:clean => false) do
-          installer = Installer::PodSourceInstaller.new(sandbox, specs)
-          installer.install!
-          sandbox.root + spec.name
-        end
+        installer = Installer::PodSourceInstaller.new(sandbox, specs, :can_cache => false)
+        installer.install!
+        sandbox.root + spec.name
       end
 
       # Picks a project or workspace suitable for the demo purposes in the
