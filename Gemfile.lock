@@ -1,39 +1,39 @@
 GIT
   remote: https://github.com/CocoaPods/CLAide.git
-  revision: d5a7ef8f3e730f195ecb3dfd2ec5891d1c6988d7
+  revision: 90b7d532037960a2a7befcafe7a7147fcf86982c
   branch: master
   specs:
-    claide (1.0.0.beta.1)
+    claide (1.0.0.beta.2)
 
 GIT
   remote: https://github.com/CocoaPods/CocoaPods.git
-  revision: 1fd0fe8d218c6983fd982f4ef7efe38ac540768e
+  revision: 1f06a58c62661831f246f2e7349be48575b6192e
   branch: master
   specs:
-    cocoapods (1.0.0.beta.1)
+    cocoapods (1.0.0.beta.5)
       activesupport (>= 4.0.2)
-      claide (>= 1.0.0.beta.1, < 2.0)
-      cocoapods-core (= 1.0.0.beta.1)
+      claide (>= 1.0.0.beta.2, < 2.0)
+      cocoapods-core (= 1.0.0.beta.5)
       cocoapods-deintegrate (>= 1.0.0.beta.1, < 2.0)
       cocoapods-downloader (>= 1.0.0.beta.1, < 2.0)
       cocoapods-plugins (>= 1.0.0.beta.1, < 2.0)
       cocoapods-search (>= 1.0.0.beta.1, < 2.0)
-      cocoapods-stats (>= 1.0.0.beta.1, < 2.0)
-      cocoapods-trunk (>= 1.0.0.beta.1, < 2.0)
-      cocoapods-try (>= 1.0.0.beta.1, < 2.0)
+      cocoapods-stats (>= 1.0.0.beta.3, < 2.0)
+      cocoapods-trunk (>= 1.0.0.beta.2, < 2.0)
+      cocoapods-try (>= 1.0.0.beta.2, < 2.0)
       colored (~> 1.2)
       escape (~> 0.0.4)
       fourflusher (~> 0.3.0)
-      molinillo (~> 0.4.1)
+      molinillo (~> 0.4.4)
       nap (~> 1.0)
-      xcodeproj (>= 1.0.0.beta.1, < 2.0)
+      xcodeproj (>= 1.0.0.beta.3, < 2.0)
 
 GIT
   remote: https://github.com/CocoaPods/Core.git
-  revision: f1b6ae5c1c0f45405e71d508c441398e6fa5191f
+  revision: 66c7b3b40fde614bb3eb6e287c25da4dfc6529c1
   branch: master
   specs:
-    cocoapods-core (1.0.0.beta.1)
+    cocoapods-core (1.0.0.beta.5)
       activesupport (>= 4.0.2)
       fuzzy_match (~> 2.0.4)
       nap (~> 1.0)
@@ -46,7 +46,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.5)
+    activesupport (4.2.6)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -61,8 +61,8 @@ GEM
     cocoapods-plugins (1.0.0.beta.1)
       nap
     cocoapods-search (1.0.0.beta.1)
-    cocoapods-stats (1.0.0.beta.1)
-    cocoapods-trunk (1.0.0.beta.1)
+    cocoapods-stats (1.0.0.beta.3)
+    cocoapods-trunk (1.0.0.beta.2)
       nap (>= 0.8, < 2.0)
       netrc (= 0.7.8)
     codeclimate-test-reporter (0.4.7)
@@ -75,13 +75,13 @@ GEM
     i18n (0.7.0)
     json (1.8.3)
     metaclass (0.0.4)
-    minitest (5.8.3)
+    minitest (5.8.4)
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     mocha-on-bacon (0.2.2)
       mocha (>= 0.13.0)
-    molinillo (0.4.1)
-    nap (1.0.0)
+    molinillo (0.4.4)
+    nap (1.1.0)
     netrc (0.7.8)
     parser (2.2.2.6)
       ast (>= 1.1, < 3.0)
@@ -105,7 +105,7 @@ GEM
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    xcodeproj (1.0.0.beta.2)
+    xcodeproj (1.0.0.beta.3)
       activesupport (>= 3)
       claide (>= 1.0.0.beta.1, < 2.0)
       colored (~> 1.2)

@@ -196,7 +196,7 @@ module Pod
       # @return [void] Updates the specs repo unless disabled by the config.
       #
       def update_specs_repos
-        return unless repo_update?(default: true)
+        return unless repo_update?(:default => true)
         UI.section 'Updating spec repositories' do
           SourcesManager.update
         end
