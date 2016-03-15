@@ -1,5 +1,13 @@
 # Cocoapods::Try Changelog
 
+## Master
+
+##### Bug Fixes
+
+* Compatibility with CocoaPods 1.0.0.beta.6.  
+  [Marius Rackwitz](https://github.com/mrackwitz)
+
+
 ## 1.0.0.beta.2 (2016-01-05)
 
 ##### Bug Fixes
