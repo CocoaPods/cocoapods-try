@@ -33,14 +33,12 @@ module Pod
       end
 
       it 'allows the user to try the Pod with the given name' do
-        Config.instance.with_changes(:skip_repo_update => false) do
-          command = Pod::Command.parse(%w(try ARAnalytics))
-          Installer::PodSourceInstaller.any_instance.expects(:install!)
-          command.expects(:update_specs_repos)
-          command.expects(:pick_demo_project).returns(XCODE_PROJECT)
-          command.expects(:open_project).with(XCODE_PROJECT)
-          command.run
-        end
+        command = Pod::Command.parse(%w(try ARAnalytics))
+        Installer::PodSourceInstaller.any_instance.expects(:install!)
+        command.expects(:update_specs_repos)
+        command.expects(:pick_demo_project).returns(XCODE_PROJECT)
+        command.expects(:open_project).with(XCODE_PROJECT)
+        command.run
       end
 
       it 'allows the user to try the Pod with the given Git URL' do
@@ -51,13 +49,32 @@ module Pod
         stub_spec = stub(:name => 'ARAnalytics')
         Pod::Specification.stubs(:from_file).with(spec_file).returns(stub_spec)
 
-        Config.instance.skip_repo_update = false
         command = Pod::Command.parse(['try', 'https://github.com/orta/ARAnalytics.git'])
         Installer::PodSourceInstaller.any_instance.expects(:install!)
         command.expects(:update_specs_repos).never
         command.expects(:pick_demo_project).returns(XCODE_PROJECT)
         command.expects(:open_project).with(XCODE_PROJECT)
         command.run
+      end
+
+      describe 'updates of the spec repos' do
+        it 'updates the spec repos by default' do
+          command = Pod::Command.parse(%w(try ARAnalytics))
+          Installer::PodSourceInstaller.any_instance.expects(:install!)
+          SourcesManager.expects(:update)
+          command.expects(:pick_demo_project).returns(XCODE_PROJECT)
+          command.expects(:open_project).with(XCODE_PROJECT)
+          command.run
+        end
+
+        it "doesn't update the spec repos if that option was given" do
+          command = Pod::Command.parse(%w(try ARAnalytics --no-repo-update))
+          Installer::PodSourceInstaller.any_instance.expects(:install!)
+          SourcesManager.expects(:update).never
+          command.expects(:pick_demo_project).returns(XCODE_PROJECT)
+          command.expects(:open_project).with(XCODE_PROJECT)
+          command.run
+        end
       end
     end
 

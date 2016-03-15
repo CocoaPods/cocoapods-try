@@ -7,6 +7,8 @@ module Pod
     # The pod try command.
     #
     class Try < Command
+      include RepoUpdate
+
       self.summary = 'Try a Pod!'
 
       self.description = <<-DESC
@@ -17,14 +19,7 @@ module Pod
 
       self.arguments = [CLAide::Argument.new(%w(NAME URL), true)]
 
-      def self.options
-        [
-          ['--no-repo-update', 'Skip running `pod repo update` before install'],
-        ].concat(super)
-      end
-
       def initialize(argv)
-        config.skip_repo_update = !argv.flag?('repo-update', !config.skip_repo_update)
         @name = argv.shift_argument
         super
       end
@@ -201,7 +196,7 @@ module Pod
       # @return [void] Updates the specs repo unless disabled by the config.
       #
       def update_specs_repos
-        return if config.skip_repo_update?
+        return unless repo_update?(:default => true)
         UI.section 'Updating spec repositories' do
           SourcesManager.update
         end
