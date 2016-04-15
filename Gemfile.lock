@@ -1,39 +1,39 @@
 GIT
   remote: https://github.com/CocoaPods/CLAide.git
-  revision: 90b7d532037960a2a7befcafe7a7147fcf86982c
+  revision: 62896152c8f884ddb062afb2cb0ff7a4fd0a9a65
   branch: master
   specs:
-    claide (1.0.0.beta.2)
+    claide (1.0.0.beta.3)
 
 GIT
   remote: https://github.com/CocoaPods/CocoaPods.git
-  revision: 1f06a58c62661831f246f2e7349be48575b6192e
+  revision: 96c6d8babc3a4d36927eadb51401d77fce18df86
   branch: master
   specs:
-    cocoapods (1.0.0.beta.5)
+    cocoapods (1.0.0.beta.7)
       activesupport (>= 4.0.2)
-      claide (>= 1.0.0.beta.2, < 2.0)
-      cocoapods-core (= 1.0.0.beta.5)
+      claide (>= 1.0.0.beta.3, < 2.0)
+      cocoapods-core (= 1.0.0.beta.7)
       cocoapods-deintegrate (>= 1.0.0.beta.1, < 2.0)
-      cocoapods-downloader (>= 1.0.0.beta.1, < 2.0)
+      cocoapods-downloader (= 1.0.0.beta.3)
       cocoapods-plugins (>= 1.0.0.beta.1, < 2.0)
-      cocoapods-search (>= 1.0.0.beta.1, < 2.0)
-      cocoapods-stats (>= 1.0.0.beta.3, < 2.0)
-      cocoapods-trunk (>= 1.0.0.beta.2, < 2.0)
-      cocoapods-try (>= 1.0.0.beta.2, < 2.0)
+      cocoapods-search (= 1.0.0.beta.2)
+      cocoapods-stats (= 1.0.0.beta.4)
+      cocoapods-trunk (= 1.0.0.beta.3)
+      cocoapods-try (>= 1.0.0.beta.3, < 2.0)
       colored (~> 1.2)
       escape (~> 0.0.4)
       fourflusher (~> 0.3.0)
       molinillo (~> 0.4.4)
       nap (~> 1.0)
-      xcodeproj (>= 1.0.0.beta.3, < 2.0)
+      xcodeproj (= 1.0.0.beta.4)
 
 GIT
   remote: https://github.com/CocoaPods/Core.git
-  revision: 66c7b3b40fde614bb3eb6e287c25da4dfc6529c1
+  revision: a31c88165961dd2d79f12e4d09534c2fbfa314b2
   branch: master
   specs:
-    cocoapods-core (1.0.0.beta.5)
+    cocoapods-core (1.0.0.beta.7)
       activesupport (>= 4.0.2)
       fuzzy_match (~> 2.0.4)
       nap (~> 1.0)
@@ -57,12 +57,12 @@ GEM
       parser (~> 2.2)
     bacon (1.2.0)
     cocoapods-deintegrate (1.0.0.beta.1)
-    cocoapods-downloader (1.0.0.beta.1)
+    cocoapods-downloader (1.0.0.beta.3)
     cocoapods-plugins (1.0.0.beta.1)
       nap
-    cocoapods-search (1.0.0.beta.1)
-    cocoapods-stats (1.0.0.beta.3)
-    cocoapods-trunk (1.0.0.beta.2)
+    cocoapods-search (1.0.0.beta.2)
+    cocoapods-stats (1.0.0.beta.4)
+    cocoapods-trunk (1.0.0.beta.3)
       nap (>= 0.8, < 2.0)
       netrc (= 0.7.8)
     codeclimate-test-reporter (0.4.7)
@@ -105,7 +105,7 @@ GEM
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    xcodeproj (1.0.0.beta.3)
+    xcodeproj (1.0.0.beta.4)
       activesupport (>= 3)
       claide (>= 1.0.0.beta.1, < 2.0)
       colored (~> 1.2)

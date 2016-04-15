@@ -79,7 +79,7 @@ module Pod
       # @return [Specification] The specification.
       #
       def spec_with_name(name)
-        set = SourcesManager.search(Dependency.new(name))
+        set = config.sources_manager.search(Dependency.new(name))
         if set
           set.specification.root
         else
@@ -198,7 +198,7 @@ module Pod
       def update_specs_repos
         return unless repo_update?(:default => true)
         UI.section 'Updating spec repositories' do
-          SourcesManager.update
+          config.sources_manager.update
         end
       end
 
