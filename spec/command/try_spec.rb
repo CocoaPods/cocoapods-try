@@ -61,7 +61,7 @@ module Pod
         it 'updates the spec repos by default' do
           command = Pod::Command.parse(%w(try ARAnalytics))
           Installer::PodSourceInstaller.any_instance.expects(:install!)
-          SourcesManager.expects(:update)
+          command.config.sources_manager.expects(:update)
           command.expects(:pick_demo_project).returns(XCODE_PROJECT)
           command.expects(:open_project).with(XCODE_PROJECT)
           command.run
@@ -70,7 +70,7 @@ module Pod
         it "doesn't update the spec repos if that option was given" do
           command = Pod::Command.parse(%w(try ARAnalytics --no-repo-update))
           Installer::PodSourceInstaller.any_instance.expects(:install!)
-          SourcesManager.expects(:update).never
+          command.config.sources_manager.expects(:update).never
           command.expects(:pick_demo_project).returns(XCODE_PROJECT)
           command.expects(:open_project).with(XCODE_PROJECT)
           command.run
