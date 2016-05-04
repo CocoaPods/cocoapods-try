@@ -5,6 +5,7 @@ require 'pod/try_settings'
 module Pod
   class Command
     # The pod try command.
+    # @CocoaPods 0.29.0
     #
     class Try < Command
       include RepoUpdate
