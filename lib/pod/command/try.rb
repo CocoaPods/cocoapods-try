@@ -17,28 +17,28 @@ module Pod
           dependencies if needed and opens its demo project. If a Git URL is
           provided the head of the repo is used.
 
-          If a Git URL is specified, then a --podspec_location can be provided,
-          which is the path to the podspec within the Git Repository.
+          If a Git URL is specified, then a --podspec_name can be provided,
+          if the podspec name is different than the git repo for some reason.
       DESC
 
       self.arguments = [CLAide::Argument.new(%w(NAME URL), true)]
 
       def self.options
         [
-          ['--podspec_location=[path]', 'The location to the podspec file within the Git Repository'],
+          ['--podspec_name=[name]', 'The name of the podspec file within the Git Repository'],
         ].concat(super)
       end
 
       def initialize(argv)
         @name = argv.shift_argument
-        @podspec_location = argv.option('podspec_location')
+        @podspec_name = argv.option('podspec_name')
         super
       end
 
       def validate!
         super
         help! 'A Pod name or URL is required.' unless @name
-        help! 'Location to podspec can only be used with a Git URL' if @podspec_location && !git_url?(@name)
+        help! 'Podspec name can only be used with a Git URL' if @podspec_name && !git_url?(@name)
       end
 
       def run
@@ -73,7 +73,7 @@ module Pod
       #
       def setup_spec_in_sandbox(sandbox)
         if git_url?(@name)
-          spec = spec_with_url(@name, @podspec_location)
+          spec = spec_with_url(@name, @podspec_name)
           sandbox.store_pre_downloaded_pod(spec.name)
         else
           update_specs_repos
@@ -105,14 +105,15 @@ module Pod
       # @param [String] url
       #        The URL for the pod Git repository.
       #
-      # @param [String] spec_location
-      #        The path to the podspec within the Git repository.
+      # @param [String] spec_name
+      #        The name of the podspec file within the Git repository.
       #
       # @return [Specification] The specification.
       #
-      def spec_with_url(url, spec_location = nil)
+      def spec_with_url(url, spec_name = nil)
         name = url.split('/').last
         name = name.chomp('.git') if name.end_with?('.git')
+        name = spec_name unless spec_name.nil?
 
         target_dir = TRY_TMP_DIR + name
         target_dir.rmtree if target_dir.exist?
@@ -120,8 +121,7 @@ module Pod
         downloader = Pod::Downloader.for_target(target_dir, :git => url)
         downloader.download
 
-        spec_location = "#{name}.podspec{,.json}" if spec_location.nil?
-        spec_file = Pathname.glob(target_dir + spec_location).first
+        spec_file = Pathname.glob(target_dir + "#{name}.podspec{,.json}").first
         Pod::Specification.from_file(spec_file)
       end
 

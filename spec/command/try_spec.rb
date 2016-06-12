@@ -19,11 +19,11 @@ module Pod
         end.message.should.match(/A Pod name or URL is required/)
       end
 
-      it 'presents the help if name and location is provided' do
-        command = Pod::Command.parse(%w(try ARAnalytics --podspec_location=Analytics.podspec))
+      it 'presents the help if name and podspec name is provided' do
+        command = Pod::Command.parse(%w(try ARAnalytics --podspec_name=Analytics.podspec))
         should.raise CLAide::Help do
           command.validate!
-        end.message.should.match(/Location to podspec can only be used with a Git URL/)
+        end.message.should.match(/Podspec name can only be used with a Git URL/)
       end
 
       before do
@@ -107,14 +107,14 @@ module Pod
           spec.should == stub_spec
         end
 
-        it 'returns a spec for an https git repo with podspec_location option' do
+        it 'returns a spec for an https git repo with podspec_name option' do
           require 'cocoapods-downloader/git'
           Pod::Downloader::Git.any_instance.expects(:download)
           spec_file = Pod::Command::Try::TRY_TMP_DIR + 'ARAnalytics/Analytics.podspec'
           Pathname.stubs(:glob).once.returns([spec_file])
           stub_spec = stub
           Pod::Specification.stubs(:from_file).with(spec_file).returns(stub_spec)
-          spec = @sut.spec_with_url('https://github.com/orta/ARAnalytics.git', 'Analytics.podspec')
+          spec = @sut.spec_with_url('https://github.com/orta/ARAnalytics.git', 'Analytics')
           spec.should == stub_spec
         end
       end
