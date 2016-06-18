@@ -1,10 +1,12 @@
-# Cocoapods::Try Changelog
+# CocoaPods::Try CHANGELOG
 
 ## Master
 
 ##### Enhancements
 
-* None.  
+* Added a command line option for specifying the podspec file from Git URL  
+  [@rockwotj](https://github.com/rockwotj)
+  [59](https://github.com/CocoaPods/CocoaPods-try/issues/59)
 
 ##### Bug Fixes
 
