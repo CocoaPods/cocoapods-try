@@ -135,7 +135,8 @@ module Pod
       #
       def install_pod(spec, sandbox)
         specs = { :ios => spec, :osx => spec }
-        installer = Installer::PodSourceInstaller.new(sandbox, specs, :can_cache => false)
+        dummy_podfile = Podfile.new
+        installer = Installer::PodSourceInstaller.new(sandbox, dummy_podfile, specs, :can_cache => false)
         installer.install!
         sandbox.root + spec.name
       end
