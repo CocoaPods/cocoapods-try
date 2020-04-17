@@ -8,7 +8,10 @@
 
 ##### Bug Fixes
 
-* None.  
+* Fix a crash when using `pod try` with CocoaPods 1.8.0 or higher.  
+  [@arielpollack](https://github.com/arielpollack)
+  [#63](https://github.com/CocoaPods/cocoapods-try/issues/63)
+  [#65](https://github.com/CocoaPods/cocoapods-try/pull/65)
 
 
 ## 1.1.0 (2016-07-10)

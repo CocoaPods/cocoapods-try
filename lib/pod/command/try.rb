@@ -135,7 +135,12 @@ module Pod
       #
       def install_pod(spec, sandbox)
         specs = { :ios => spec, :osx => spec }
-        installer = Installer::PodSourceInstaller.new(sandbox, specs, :can_cache => false)
+        if cocoapods_version >= Pod::Version.new('1.8.0')
+          dummy_podfile = Podfile.new
+          installer = Installer::PodSourceInstaller.new(sandbox, dummy_podfile, specs, :can_cache => false)
+        else
+          installer = Installer::PodSourceInstaller.new(sandbox, specs, :can_cache => false)
+        end
         installer.install!
         sandbox.root + spec.name
       end
@@ -260,6 +265,12 @@ module Pod
           sister_workspace = p.chomp(File.extname(p.to_s)) + '.xcworkspace'
           p.end_with?('.xcodeproj') && glob_match.include?(sister_workspace)
         end
+      end
+
+      # @return [Pod::Version] the version of CocoaPods currently running
+      #
+      def cocoapods_version
+        Pod::Version.new(Pod::VERSION)
       end
 
       #-------------------------------------------------------------------#
