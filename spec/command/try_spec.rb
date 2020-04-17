@@ -130,64 +130,67 @@ module Pod
 
       describe '#pick_demo_project' do
         it 'raises if no demo project could be found' do
-          projects = []
-          Dir.stubs(:glob).returns(projects)
+          @sut.stubs(:projects_in_dir).returns([])
           should.raise Informative do
-            @sut.pick_demo_project(stub)
+            @sut.pick_demo_project('.')
           end.message.should.match(/Unable to find any project/)
         end
 
         it 'picks a demo project' do
           projects = ['Demo.xcodeproj']
           Dir.stubs(:glob).returns(projects)
-          path = @sut.pick_demo_project(stub)
+          path = @sut.pick_demo_project('.')
           path.should == 'Demo.xcodeproj'
         end
 
         it 'is not case sensitive' do
           projects = ['demo.xcodeproj']
           Dir.stubs(:glob).returns(projects)
-          path = @sut.pick_demo_project(stub)
+          path = @sut.pick_demo_project('.')
           path.should == 'demo.xcodeproj'
         end
 
         it 'considers also projects named example' do
           projects = ['Example.xcodeproj']
           Dir.stubs(:glob).returns(projects)
-          path = @sut.pick_demo_project(stub)
+          path = @sut.pick_demo_project('.')
           path.should == 'Example.xcodeproj'
         end
 
         it 'returns the project if only one is found' do
-          projects = ['Lib.xcodeproj']
-          Dir.stubs(:glob).returns(projects)
-          path = @sut.pick_demo_project(stub)
-          path.should == 'Lib.xcodeproj'
+          projects = [Pathname.new('Lib.xcodeproj')]
+          @sut.stubs(:projects_in_dir).returns(projects)
+          path = @sut.pick_demo_project('.')
+          path.to_s.should == 'Lib.xcodeproj'
         end
 
         it 'asks the user which project would like to open if not a single suitable one is found' do
           projects = ['Lib_1.xcodeproj', 'Lib_2.xcodeproj']
-          Dir.stubs(:glob).returns(projects)
+          @sut.stubs(:projects_in_dir).returns(projects)
           UI.stubs(:choose_from_array).returns(0)
-          path = @sut.pick_demo_project(stub(:cleanpath => ''))
-          path.should == 'Lib_1.xcodeproj'
+          path = @sut.pick_demo_project('.')
+          path.to_s.should == 'Lib_1.xcodeproj'
+
+          UI.stubs(:choose_from_array).returns(1)
+          path = @sut.pick_demo_project('.')
+          path.to_s.should == 'Lib_2.xcodeproj'
         end
 
         it 'should prefer demo or example workspaces' do
-          Dir.stubs(:glob).returns(['Project Demo.xcodeproj', 'Project Demo.xcworkspace'])
-          path = @sut.pick_demo_project(stub(:cleanpath => ''))
+          @sut.stubs(:projects_in_dir).returns(['Project Demo.xcodeproj', 'Project Demo.xcworkspace'])
+          path = @sut.pick_demo_project('.')
           path.should == 'Project Demo.xcworkspace'
         end
 
         it 'should not show workspaces inside a project' do
           Dir.stubs(:glob).returns(['Project Demo.xcodeproj', 'Project Demo.xcodeproj/project.xcworkspace'])
-          path = @sut.pick_demo_project(stub(:cleanpath => ''))
+          path = @sut.pick_demo_project('.')
           path.should == 'Project Demo.xcodeproj'
         end
 
         it 'should prefer workspaces over projects with the same name' do
-          Dir.stubs(:glob).returns(['Project Demo.xcodeproj', 'Project Demo.xcworkspace'])
-          path = @sut.pick_demo_project(stub(:cleanpath => ''))
+          @sut.stubs(:projects_in_dir).returns(['Project Demo.xcodeproj', 'Project Demo.xcworkspace'])
+          path = @sut.pick_demo_project('.')
           path.should == 'Project Demo.xcworkspace'
         end
       end
@@ -204,7 +207,7 @@ module Pod
           Pathname.any_instance.stubs(:exist?).returns(true)
           proj = XCODE_PROJECT
           @sut.expects(:perform_cocoapods_installation)
-          Podfile.stubs(:from_file).returns(stub(:workspace_path => XCODE_WORKSPACE))
+          Podfile.stubs(:from_file).returns(stub('Workspace', :workspace_path => XCODE_WORKSPACE))
           path = @sut.install_podfile(proj)
           path.to_s.should == XCODE_WORKSPACE.to_s
         end
@@ -212,7 +215,7 @@ module Pod
         it 'returns the default workspace if one is not set' do
           Pathname.any_instance.stubs(:exist?).returns(true)
           proj = XCODE_PROJECT
-          Podfile.stubs(:from_file).returns(stub(:workspace_path => nil))
+          Podfile.stubs(:from_file).returns(stub('Workspace', :workspace_path => nil))
           @sut.expects(:perform_cocoapods_installation).once
           path = @sut.install_podfile(proj)
           path.to_s.should == XCODE_WORKSPACE.to_s

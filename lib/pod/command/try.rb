@@ -153,6 +153,7 @@ module Pod
       # @return [String] The path of the project.
       #
       def pick_demo_project(dir)
+        dir = Pathname.new(dir)
         projs = projects_in_dir(dir)
         if projs.count == 0
           raise Informative, 'Unable to find any project in the source files' \
