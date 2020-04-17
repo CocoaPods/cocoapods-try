@@ -3,9 +3,9 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
+  gem 'claide',         :git => 'https://github.com/CocoaPods/CLAide.git', :branch => 'master'
   gem 'cocoapods',      :git => 'https://github.com/CocoaPods/CocoaPods.git', :branch => 'master'
   gem 'cocoapods-core', :git => 'https://github.com/CocoaPods/Core.git', :branch => 'master'
-  gem 'claide',         :git => 'https://github.com/CocoaPods/CLAide.git', :branch => 'master'
 
   gem 'bacon'
   gem 'mocha'
@@ -14,6 +14,6 @@ group :development do
 
   if RUBY_VERSION >= '1.9.3'
     gem 'codeclimate-test-reporter', :require => nil
-    gem 'rubocop'
+    gem 'rubocop', '0.50.0'
   end
 end

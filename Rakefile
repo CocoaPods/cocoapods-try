@@ -1,7 +1,7 @@
 # Bootstrap
 #-----------------------------------------------------------------------------#
 
-task :bootstrap, :use_bundle_dir? do |t, args|
+task :bootstrap, :use_bundle_dir? do |_t, args|
   if system('which bundle')
     if args[:use_bundle_dir?]
       sh 'bundle install --path ./travis_bundle_dir'
@@ -18,7 +18,6 @@ task :bootstrap, :use_bundle_dir? do |t, args|
 end
 
 begin
-
   require 'bundler/gem_tasks'
 
   task :default => 'spec'
@@ -47,7 +46,6 @@ begin
     require 'rubocop/rake_task'
     RuboCop::RakeTask.new
   end
-
 rescue LoadError
   $stderr.puts "\033[0;31m" \
     '[!] Some Rake tasks haven been disabled because the environment' \
