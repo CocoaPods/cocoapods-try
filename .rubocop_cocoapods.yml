@@ -122,3 +122,8 @@ Style/ClassAndModuleChildren:
 Lint/UselessComparison:
   Exclude:
     - spec/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
