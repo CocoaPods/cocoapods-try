@@ -128,6 +128,25 @@ module Pod
         path.should == sandbox.root + 'ARAnalytics'
       end
 
+      it 'installs the pod on older versions of CocoaPods' do
+        @sut.stubs(:cocoapods_version).returns(Pod::Version.new('1.7.0'))
+        spec = stub(:name => 'ARAnalytics')
+        sandbox_root = Pathname.new(Pod::Command::Try::TRY_TMP_DIR)
+        sandbox = Sandbox.new(sandbox_root)
+        installer = stub('Installer')
+        installer.stubs(:install!)
+        Pod::Installer::PodSourceInstaller.expects(:new).with(any_parameters) do |*args|
+          args.size == 3
+        end.returns(installer).once
+        @sut.install_pod(spec, sandbox)
+
+        @sut.stubs(:cocoapods_version).returns(Pod::Version.new('1.8.0'))
+        Pod::Installer::PodSourceInstaller.expects(:new).with(any_parameters) do |*args|
+          args.size == 4
+        end.returns(installer)
+        @sut.install_pod(spec, sandbox)
+      end
+
       describe '#pick_demo_project' do
         it 'raises if no demo project could be found' do
           @sut.stubs(:projects_in_dir).returns([])
