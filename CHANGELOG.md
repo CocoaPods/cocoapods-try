@@ -8,6 +8,17 @@
 
 ##### Bug Fixes
 
+* None.  
+
+
+## 1.2.0 (2020-04-20)
+
+##### Enhancements
+
+* None.  
+
+##### Bug Fixes
+
 * Fix a crash when using `pod try` with CocoaPods 1.8.0 or higher.  
   [@arielpollack](https://github.com/arielpollack)
   [#63](https://github.com/CocoaPods/cocoapods-try/issues/63)
