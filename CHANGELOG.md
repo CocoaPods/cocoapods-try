@@ -1,6 +1,6 @@
 # CocoaPods::Try CHANGELOG
 
-## Master
+## 1.2.0 (2020-04-20)
 
 ##### Enhancements
 
